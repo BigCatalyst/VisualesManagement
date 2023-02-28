@@ -1,0 +1,96 @@
+{% extends "account/base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+
+    .custom-overlay .login-content .remember {
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      font-family: 'Nunito', sans-serif;
+      font-size: #abb7c4;
+      color: #222222;
+      font-weight: 600;
+      text-transform: none;
+    }
+    .custom-overlay .login-content label {
+      font-family: 'Dosis', sans-serif;
+      font-size: 14px;
+      color: #222222;
+      font-weight: bold;
+      text-transform: uppercase;
+      width: auto;
+      margin-bottom: 25px;
+    }
+
+    .custom-overlay .login-content button {
+      font-family: 'Dosis', sans-serif;
+      font-size: 14px;
+      color: #ffffff;
+      font-weight: bold;
+      text-transform: uppercase;
+      border: none;
+      background-color: #dd003f;
+      height: 42px;
+      width: 100%;
+      cursor: pointer;
+    }
+    .custom-overlay .login-content label input {
+      font-family: 'Dosis', sans-serif;
+      font-size: 14px;
+      color: #222222;
+      font-weight: bold;
+      text-transform: capitalize;
+      margin-top: 10px;
+      height: 42px;
+      border: 1px solid #e1e1e1;
+    }
+    .custom-overlay a:hover{
+      color: #404040;
+    }
+    input[type="text"]{
+      width: 100% !important;
+    }
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans "Sign In" %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans "Sign In" %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {% trans "Home" %}
+{% endblock %}
+{% block breadcrumb_url %}
+  /
+{% endblock %}
+
+{% block inner %}
+  <div class="custom-overlay">
+    <div class="login-content" style="display:flex; justify-content:center;">
+      <form class="login" method="POST"
+            action="{% url 'tasks:license' %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}"
+                 value="{{ redirect_field_value }}"/>
+        {% endif %}
+        {#      <div class="remember">#}
+        {#        <a class="button secondaryAction"#}
+        {#           href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>#}
+        {#      </div>#}
+        <button class="primaryAction btn btn-primary"
+                type="submit">{% trans "Validar licencia" %}</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

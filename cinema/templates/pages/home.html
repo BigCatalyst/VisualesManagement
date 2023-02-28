@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block custom_css %}
+  <style>
+    .slider .gradient_overlay {
+      opacity: 0.85;
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background-color: #171717;
+    }
+  </style>
+{% endblock %}
+{% block search %}
+{% endblock %}
+{% block common %}
+  <div class="slider movie-items">
+  </div>
+{% endblock %}
+{% block page-single %}
+{% endblock %}

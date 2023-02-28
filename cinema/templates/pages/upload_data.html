@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+
+    .custom-overlay .login-content .remember {
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      font-family: 'Nunito', sans-serif;
+      font-size: #abb7c4;
+      color: #222222;
+      font-weight: 600;
+      text-transform: none;
+    }
+    .custom-overlay .login-content label {
+      font-family: 'Dosis', sans-serif;
+      font-size: 14px;
+      color: #222222;
+      font-weight: bold;
+      text-transform: uppercase;
+      width: auto;
+      margin-bottom: 25px;
+    }
+
+    .custom-overlay .login-content button {
+      font-family: 'Dosis', sans-serif;
+      font-size: 14px;
+      color: #ffffff;
+      font-weight: bold;
+      text-transform: uppercase;
+      border: none;
+      background-color: #dd003f;
+      height: 42px;
+      width: 100%;
+      cursor: pointer;
+    }
+    .custom-overlay .login-content label input {
+      font-family: 'Dosis', sans-serif;
+      font-size: 14px;
+      color: #222222;
+      font-weight: bold;
+      text-transform: capitalize;
+      margin-top: 10px;
+      height: 42px;
+      border: 1px solid #e1e1e1;
+    }
+    .custom-overlay a:hover{
+      color: #404040;
+    }
+    input[type="text"]{
+      width: 100% !important;
+    }
+    .card {
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  padding: 20px
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card a {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.card a:hover {
+  opacity: 0.7;
+}
+/* The alert message box */
+.alert {
+  padding: 20px;
+  background-color: #f44336; /* Red */
+  color: white;
+  margin-bottom: 15px;
+}
+
+/* The close button */
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+  color: black;
+}
+
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans "Carga de datos" %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans "Carga de datos" %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {% trans "Home" %}
+{% endblock %}
+{% block breadcrumb_url %}
+  /
+{% endblock %}
+
+{% block inner %}
+  <div class="custom-overlay">
+    {% if errors %}
+        <div class="alert">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+          {{ errors }}
+        </div>
+    {% endif %}
+    <div class="login-content" style="display:flex; justify-content:space-around;">
+        <div class="card">
+            <h1>Grupo de datos 1</h1>
+            <ul>
+                <li>Autores (Discografía)</li>
+                <li>DVD</li>
+                <li>Albums </li>
+                <li>Colecciones</li>
+                <li>Conciertos</li>
+            </ul>
+            <p><a href="{% url 'load-data-1' %}">Cargar</a></p>
+        </div>
+        <div class="card">
+            <h1>Grupo de datos 2</h1>
+            <ul>
+                <li>Actores</li>
+                <li>Películas</li>
+                <li>Series </li>
+                <li>Temporadas de las Series</li>
+                <li>Actores por película</li>
+                <li>Actores por series</li>
+            </ul>
+           <p><a href="{% url 'load-data-2' %}">Cargar</a></p>
+        </div>
+        <div class="card">
+            <h1>Grupo de datos 3</h1>
+            <ul>
+                <li>Juegos</li>
+                <li>Deportes</li>
+                <li>Documentales</li>
+                <li>Temporadas de los documentales </li>
+                <li>Combos</li>
+                <li>Ofertas</li>
+            </ul>
+            <p><a href="{% url 'load-data-3' %}">Cargar</a></p>
+        </div>
+    </div>
+  </div>
+{% endblock %}

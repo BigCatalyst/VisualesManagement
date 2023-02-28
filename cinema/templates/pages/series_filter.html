@@ -1,0 +1,394 @@
+{% extends "base.html" %}
+{% load actor_filter %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags series_filter %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+      .movie-items .movie-item .title-in h6 a {
+    font-family: 'Dosis', sans-serif;
+    font-size: 14px;
+    color: #fff4e4;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.movie-items .movie-item .title-in h7 a {
+    color: #fff4e4;
+}
+
+.movie-items .movie-item:hover .title-in, .movie-items .movie-item:hover img {
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+    -moz-opacity: 1;
+    -khtml-opacity: 1;
+   -webkit-opacity: 1;
+   opacity: 1;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=100);
+    filter: alpha(opacity=100);
+}
+    .esp-card {
+      /* Add shadows to create the "card" effect */
+      box-shadow: 0 4px 8px 0 rgba(158, 10, 15, 0.78);
+      transition: 0.3s;
+      color: #fff4e4;
+      margin-bottom: 35px;
+      height: 385px;
+      background-color: rgba(158, 10, 15, 0.78);
+    }
+
+    .card p:last-child {
+      color: #fff4e4;
+    }
+
+    /* On mouse-over, add a deeper shadow */
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(220, 248, 54, 0.78);
+      color: rgb(220, 248, 54);
+    }
+
+    .card .card-content {
+      padding: 16px 32px;
+    }
+    .cate{
+        position: absolute;
+        bottom: 40px;
+        width: 150%;
+    }
+    .cate-transmission .red {
+        background-color: #bb1616;
+    }
+    .cate-transmission span {
+        padding: 3px 5px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 4px;
+    }
+
+    /* Create four equal columns that sits next to each other */
+    .column {
+      flex: 25%;
+      max-width: 25%;
+      padding: 0 20px;
+    }
+
+    .column img {
+      vertical-align: middle;
+      width: 100%;
+    }
+
+    /* Responsive layout - makes a two column-layout instead of four columns */
+    @media screen and (max-width: 800px) {
+      .column {
+        flex: 50%;
+        max-width: 50%;
+      }
+    }
+
+    /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 600px) {
+      .column {
+        flex: 100%;
+        max-width: 100%;
+      }
+    }
+
+    .movie-item {
+      margin-bottom: 20px;
+    }
+
+    .movie-items .movie-item img {
+      -webkit-transition: all 0.5s ease-out;
+      -moz-transition: all 0.5s ease-out;
+      -o-transition: all 0.5s ease-out;
+      transition: all 0.5s ease-out;
+      height: 320px;
+      width: 100%;
+    }
+
+    .pagination li {
+      margin-right: 11px;
+      margin-bottom: 15px;
+    }
+
+        .movie-items .movie-item .title-in {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 30px;
+      margin-bottom: 20px;
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      margin-right: 20px;
+      width: max-content;
+    }
+    
+    .row form {
+    width: 50%;
+}
+.row .search {
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border: 4px solid #9d3a3d;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    width: 100%;
+}
+
+input.search {
+    height: 46px;
+    border: none;
+    background-color: #9e0a0f6b !important;
+    font-family: 'Nunito', sans-serif;
+    font-size: #abb7c4;
+    color: #222426;
+    font-weight: 300;
+    text-transform: none;
+}
+
+input.search::placeholder {
+  color: #222426;
+  opacity: 1; /* Firefox */
+}
+input.search {
+    background: url({% static 'cinema/images/uploads/topsearch.png' %}) no-repeat right 20px center;
+}
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% if request.GET.q == 'novela' %}
+    {% trans 'Novelas' %}
+  {% endif %}
+  {% if request.GET.q == 'serie' %}
+    {% trans 'Series' %}
+  {% endif %}
+  {% if request.GET.q == 'miniserie' %}
+    {% trans 'Miniseries' %}
+  {% endif %}
+  {% if request.GET.q == 'dorama' %}
+    {% trans 'Dorama' %}
+  {% endif %}
+  {% if request.GET.q == 'manga' %}
+    {% trans 'Series Manga' %}
+  {% endif %}
+  {% if request.GET.q == 'animado' %}
+    {% trans 'Series Animadas' %}
+  {% endif %}
+  {% if request.GET.q|split:'-'|first|join:'' == 'gender' %}
+    {% trans "Series de " %}{% trans request.GET.q|split:'-'|last|join:'' %}
+  {% endif %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans 'Alfabética' %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {% if request.GET.q == 'novela' %}
+    {% trans 'Novelas' %}
+  {% else %}
+    {% if request.GET.q == 'animado' or request.GET.q == 'manga' %}
+      {% trans 'Animados' %}
+    {% else %}
+      {% trans 'Series' %}
+    {% endif %}
+  {% endif %}
+{% endblock %}
+{% block breadcrumb_url %}
+  {% if request.GET.q == 'novela' %}
+    /novelas/
+  {% else %}
+    {% if request.GET.q == 'animado' or request.GET.q == 'manga' %}
+      /animados/
+    {% else %}
+      /series/
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
+{% block page-single %}
+  <div class="movie-items">
+    <div class="container">
+      <div class="row ipad-width">
+        <div class="row">
+          {% if 'q' in request.GET and request.GET.q  %}
+            <form action="{{ request.get_full_path }}" method="GET" autocomplete="on" accept-charset="utf-8" id="form-search">
+                {% csrf_token %}
+                <input type="hidden" name="q" value="{{ request.GET.q }}" />
+                <input type="hidden" name="init" value="{{ request.GET.init }}" />
+                
+               <input type="text" placeholder="Buscar series..." class="search" name="search" id="search" value="{{ request.GET.search }}" required />
+            </form>
+        {% endif %}  
+          <nav class="row" {% if 'search' in request.GET %} style="visibility: hidden;" {% endif %}>
+            <ul class="pagination" style="flex-wrap: wrap;">
+              <li class="{% if request.GET.init == 'no' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=no">0-9</a></li>
+              <li class="{% if request.GET.init == 'a' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=a">A</a></li>
+              <li class="{% if request.GET.init == 'b' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=b">B</a></li>
+              <li class="{% if request.GET.init == 'c' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=c">C</a></li>
+              <li class="{% if request.GET.init == 'd' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=d">D</a></li>
+              <li class="{% if request.GET.init == 'e' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=e">E</a></li>
+              <li class="{% if request.GET.init == 'f' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=f">F</a></li>
+              <li class="{% if request.GET.init == 'g' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=g">G</a></li>
+              <li class="{% if request.GET.init == 'h' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=h">H</a></li>
+              <li class="{% if request.GET.init == 'i' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=i">I</a></li>
+              <li class="{% if request.GET.init == 'j' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=j">J</a></li>
+              <li class="{% if request.GET.init == 'k' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=k">K</a></li>
+              <li class="{% if request.GET.init == 'l' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=l">L</a></li>
+              <li class="{% if request.GET.init == 'm' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=m">M</a></li>
+              <li class="{% if request.GET.init == 'n' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=n">N</a></li>
+              <li class="{% if request.GET.init == 'o' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=o">O</a></li>
+              <li class="{% if request.GET.init == 'p' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=p">P</a></li>
+              <li class="{% if request.GET.init == 'q' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=q">Q</a></li>
+              <li class="{% if request.GET.init == 'r' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=r">R</a></li>
+              <li class="{% if request.GET.init == 's' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=s">S</a></li>
+              <li class="{% if request.GET.init == 't' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=t">T</a></li>
+              <li class="{% if request.GET.init == 'u' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=u">U</a></li>
+              <li class="{% if request.GET.init == 'v' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=v">V</a></li>
+              <li class="{% if request.GET.init == 'w' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=w">W</a></li>
+              <li class="{% if request.GET.init == 'x' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=x">X</a></li>
+              <li class="{% if request.GET.init == 'y' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=y">Y</a></li>
+              <li class="{% if request.GET.init == 'z' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=z">Z</a></li>
+            </ul>
+          </nav>
+          <div class="col-xs-12 col-sm-12 col-md-10 col-lg-12 col-md-offset-1 col-lg-offset-0">
+            {% if not movies %}
+                <div class="title">
+                <h2> No se encontró nada... </h2>
+            </div>
+            {% endif %}
+            {% for movie in movies %}
+              <div class="col-xs-6 col-sm-5 col-md-4 col-lg-2-5 col-xs-offset-2
+               col-sm-offset-1 col-md-offset-0">
+                <div class="esp-card movie-item" style="z-index: auto">
+                  <a href="{% url 'site_series_details_page' movie.id %}"
+                     tabindex="0">
+                  <div class="mv-img">
+                   {% if not movie.photo or movie.photo == '' %}
+                    <img src="{% static 'cinema/images/NoImagen.png' %}"
+                         alt="" height="284" width="185">
+                  {% else %}
+                        <img src="{{ movie.photo.url }}"
+                            alt="" height="284" width="185">
+                  {% endif %}
+                    {% if movie.in_transmission is True %}
+                        <div class="transmission" style="position: absolute; top:0; float:left; opacity: 0.8;">
+                            <div class="cate-transmission">
+                                <span class="red" style="color:#fff;">
+                            En transmisión</span>
+                            </div>
+                        </div>
+                    {% endif %}
+                  </div>
+                  </a>
+                  <div class="title-in">
+                    <div class="cate">
+                      {% if movie|definition %}
+                        <span class="red"><a href="#" tabindex="0">
+                    {{ movie|definition }}</a></span>
+                      {% endif %}
+                    </div>
+                    <div class="name">
+                      <h6><a href="{% url 'site_series_details_page' movie.id %}">
+                        {{ movie.title_eng|truncatechars:27 }}</a></h6>
+                      {% if movie.title %}
+                        <h7><a href="#" class="bg">{{ movie.title|truncatechars:27 }}</a></h7>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="description-popup {% if forloop.counter|next_mod:5 != 0 and forloop.counter|mod:5 != 0 %}left{% else %}right{% endif %}">
+                    <div class="h-container">
+                      <div class="movie-name">
+                        <h6>{{ movie.title_eng }}</h6>
+                        {% if movie.title %}
+                          <h7>{{ movie.title }}</h7>
+                        {% endif %}
+                      </div>
+                      <div class="genders">
+                        <div class="movie-genre">
+                            <span>
+                              <svg aria-hidden="true" focusable="false"
+                                   data-prefix="fas"
+                                   data-icon="tag"
+                                   class="svg-inline--fa fa-tag fa-w-16 "
+                                   role="img" xmlns="http://www.w3.org/2000/svg"
+                                   viewBox="0 0 512 512">
+                                <path fill="currentColor"
+                                      d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z">
+                                </path></svg>
+                                  {{ movie.gender.name }}
+                            </span>
+                        </div>
+                        {% if movie.sub_genser %}
+                          {% for subg in movie.sub_gender|split:',' %}
+                            <div class="movie-genre">
+                                <span>
+                                  <svg aria-hidden="true" focusable="false"
+                                       data-prefix="fas"
+                                       data-icon="tag"
+                                       class="svg-inline--fa fa-tag fa-w-16 "
+                                       role="img" xmlns="http://www.w3.org/2000/svg"
+                                       viewBox="0 0 512 512">
+                                    <path fill="currentColor"
+                                          d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z">
+                                </path></svg>
+                                      {{ subg }}
+                                </span>
+                            </div>
+                          {% endfor %}
+                        {% endif %}
+                      </div>
+                      <div class="movie-description">
+                        {% if movie.synopsis and movie.synopsis != '' %}
+                          {{ movie.synopsis|truncatewords:15 }}
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

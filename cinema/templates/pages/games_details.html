@@ -1,0 +1,310 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags actor_filter %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+    .movie-single {
+      margin-top: 0;
+    }
+    video {
+      width: 95.7%;
+        height: auto;
+        margin-top: 15px;
+    }
+    .movie-single .movie-single-ct .mvcast-item .cast-it a {
+      color: #4280bf;
+      margin-right: 0;
+    }
+    .movie-single .movie-single-ct .mvcast-item .cast-it .cast-left {
+      width: 55%;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    @media screen and (max-width: 991px){
+      .movie-img.sticky-sb {
+        top: 0 !important;
+      }
+    }
+    #overview .run-time span {
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+
+    /* Position the image container (needed to position the left and right arrows) */
+    .container-slide {
+      position: relative;
+    }
+
+    /* Hide the images by default */
+    .mySlides {
+      display: none;
+    }
+
+    /* Add a pointer when hovering over the thumbnail images */
+    .cursor {
+      cursor: pointer;
+    }
+
+    /* Next & previous buttons */
+    .prev,
+    .next {
+      cursor: pointer;
+      position: absolute;
+      top: 40%;
+      width: auto;
+      padding: 16px;
+      margin-top: -50px;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* Position the "next button" to the right */
+    .next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    /* On hover, add a black background color with a little bit see-through */
+    .prev:hover,
+    .next:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    /* Number text (1/3 etc) */
+    .numbertext {
+      color: #f2f2f2;
+      font-size: 12px;
+      padding: 8px 12px;
+      position: absolute;
+      top: 0;
+      margin-left: 10px;
+    }
+
+    /* Container for image text */
+    .caption-container {
+      text-align: center;
+      background-color: #222;
+      padding: 2px 16px;
+      color: white;
+    }
+
+    .row-slide:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    /* Six columns side by side */
+    .column-slide {
+      float: left;
+      width: 33.3%;
+    }
+
+    /* Add a transparency effect for thumnbail images */
+    .demo {
+      opacity: 0.6;
+    }
+
+    .active-slide,
+    .demo:hover {
+      opacity: 1;
+    }
+
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans object.name %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans object.name %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {% trans "Games" %}
+{% endblock %}
+{% block breadcrumb_url %}
+  /games/
+{% endblock %}
+
+{% block page-single %}
+  <div class="page-single movie-single movie_single">
+    <div class="container">
+      <div class="row ipad-width2">
+        <div class="col-md-4 col-sm-12 col-xs-12">
+          <div class="movie-img sticky-sb gradient_overlay" style="top: 0px;">
+          {% if not object.photo or object.photo == '' %}
+                <img src="{% static 'cinema/images/NoImagen.png' %}"
+                     alt="" height="435">
+          {% else %}
+                <img src="{{ object.photo.url }}"
+                    alt="" height="435">
+          {% endif %}
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-12 col-xs-12">
+          <div class="movie-single-ct main-content">
+            <h1 class="bd-hd">{{ object.name }}
+              </h1>
+            <div class="movie-tabs">
+              <div class="tabs">
+                <ul class="tab-links tabs-mv">
+                  <li class="active"><a href="#overview">Detalles</a></li>
+                  <li><a href="#cast" onclick="readMore();"> Requisitos del Sistema </a></li>
+                </ul>
+                <div class="tab-content col-lg-12">
+                  <div id="overview" class="tab active">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        {% if object.synopsis %}
+                          {% if object.synopsis|wordcount > 50 %}
+                            <p id="synopsis" style="border-bottom: 1px solid #233a50;padding: 20px 20px 20px 0;"
+                            >
+                              {{ object.synopsis|truncatewords_html:50|safe }}
+                              <a style="cursor: pointer; justify-content:center;"
+                                 onclick="this.style.display='none'; $('#synopsis').text('{{ object.synopsis|safe }}');"
+                              >
+                                Leer más...
+                              </a>
+                            </p>
+
+                          {% else %}
+                            <p style="border-bottom: 1px solid #233a50;padding: 20px 20px 20px 0;">
+                              {{ object.synopsis|safe }}</p>
+                          {% endif %}
+                        {% else %}
+                          <p style="border-bottom: 1px solid #233a50;padding: 20px 20px 20px 0;">
+                            En estos momentos no tenemos la sinopsis de
+                            este juego. Disculpe las molestias que
+                            esto pueda ocacionar. Gracias.
+                          </p>
+                        {% endif %}
+                        <div class="section" style="display:flex;">
+                            <div>
+                            <h3 class="run-time">Año:<i style="margin-right: 40px"></i> <a href="#">{% if object.year %} {{ object.year }}
+                              {% else %} Sin definir{% endif %}</a></h3>
+                            <h3 class="run-time">Categoría: <a href="#">{% if object.category %} {{ object.category.name }}
+                              {% else %} Sin definir{% endif %}</a></h3>
+                              </div>
+                              <div style="margin-left: 150px">
+                            <h3 class="run-time"> Tipo:<i style="margin-right: 25px"></i>
+                              <a href="#">{% if object.type %} {{ object.type }}
+                              {% else %} Sin definir{% endif %}</a>
+                              </h3>
+                              <h3 class="run-time">
+                              Tamaño:
+                                <a href="#">{% if object.size %}
+                                  {{ object.size }} {% else %} Sin definir{% endif %}</a>
+                              </h3>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                   <br/>
+                    <div class="row" style="margin-left: 1px">
+                    {% if object.captures.count > 0 and object.captures.first.image.url != '/media/juegos/capturas/' %}
+                       <h3>Capturas:</h3>
+                      <div class="container-slide" style="width: 96%;">
+                        {% for capture in object.captures.all %}
+                          <div class="mySlides">
+                            <div class="numbertext">{{ forloop.counter }} / {{ object.captures.count }}</div>
+                            <img src="{{ capture.image.url }}"
+                                 style="width:100%; height: 250px ">
+                          </div>
+                        {% endfor %}
+
+
+                        <a class="prev" onclick="plusSlides(-1)">❮</a>
+                        <a class="next" onclick="plusSlides(1)">❯</a>
+
+                        <div class="row-slide" style="width: 100%;">
+                          {% for capture in object.captures.all %}
+                            <div class="column-slide">
+                              <img class="demo cursor" src="{{ capture.image.url }}"
+                                   style="width:100%; height:110px"
+                                   onclick="currentSlide({{ forloop.counter }})" alt="game capture">
+                            </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    {% endif %}
+                    </div>
+                    <div class="row" style="margin-left:0 !important; margin-top: 15px;">
+                      {% if object.manual %}
+                        <h3>Trailer:</h3>
+                        <video width="400" controls>
+                          <source src="{{ object.manual.url }}" type="video/mp4">
+                          Your browser does not support HTML5 video.
+                        </video>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div id="cast" class="tab">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                      {% if object.requirement %}
+                        <div style="display: none" id="requirement" data-json="{{ object.requirement.strip|trim }}"></div>
+                          <pre id="synopsis" style="border-bottom: 1px solid #233a50;padding: 20px 20px 20px 0;"
+                          >
+                          </pre>
+                      {% else %}
+                        <p style="border-bottom: 1px solid #233a50;padding: 20px 20px 20px 0;">
+                          En estos momentos no tenemos los requisitos del
+                          sistema de este juego. Disculpe las molestias que
+                          esto pueda ocacionar. Gracias.
+                        </p>
+                      {% endif %}
+                      </div>
+                      <!-- //== -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block custom-script %}
+  <script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("demo");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active-slide", "");
+      }
+      slides[slideIndex-1].style.display = "block";
+      dots[slideIndex-1].className += " active-slide";
+    }
+    function readMore(){ 
+        $("#synopsis").text($.trim(document.querySelector("#requirement").getAttribute('data-json')));
+    }
+  </script>
+{% endblock %}

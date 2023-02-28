@@ -1,0 +1,88 @@
+{% load actor_filter %}
+{% load i18n static %}
+{% if result_hidden_fields %}
+  <div class="hiddenfields">{# DIV for HTML validation #}
+    {% for item in result_hidden_fields %}{{ item }}{% endfor %}
+  </div>
+{% endif %}
+{% if results %}
+  <div class="results">
+    <table id="result_list">
+      <thead>
+      <tr>
+        {% for header in result_headers %}
+          <th scope="col"{{ header.class_attrib }}>
+            {% if header.sortable %}
+              {% if header.sort_priority > 0 %}
+                <div class="sortoptions">
+                  <a class="sortremove" href="{{ header.url_remove }}"
+                     title="{% translate "Remove from sorting" %}"></a>
+                  {% if num_sorted_fields > 1 %}<span class="sortpriority"
+                                                      title="{% blocktranslate with priority_number=header.sort_priority %}Sorting priority: {{ priority_number }}{% endblocktranslate %}">{{ header.sort_priority }}</span>{% endif %}
+                  <a href="{{ header.url_toggle }}"
+                     class="toggle {% if header.ascending %}ascending{% else %}descending{% endif %}"
+                     title="{% translate "Toggle sorting" %}"></a>
+                </div>
+              {% endif %}
+            {% endif %}
+            <div class="text">{% if header.sortable %}
+              <a href="{{ header.url_primary }}">{{ header.text|capfirst }}</a>{% else %}
+              <span>{{ header.text|capfirst }}</span>{% endif %}</div>
+            <div class="clear"></div>
+          </th>{% endfor %}
+      </tr>
+      </thead>
+      <tbody>
+      {% for result, obj in results|Zip:cl.result_list %}
+        {% if result.form and result.form.non_field_errors %}
+          <tr>
+            <td colspan="{{ result|length }}">{{ result.form.non_field_errors }}</td>
+          </tr>
+        {% endif %}
+        <tr class="{% if obj.reviewed == False %}selected{% endif %}">
+          {% for item in result %}
+            {% if forloop.counter == 8 %}
+              <td class="field-photo" style="text-align:center;">
+                {% if obj.photo %}
+                <div class="image-cropper">
+                  <img src="{{ obj.photo.url }}" alt="" width="40" height="40"
+                       class="img"
+                  >
+                  </div>
+                {% else %}
+                <div class="image-cropper">
+                  <img src="{% static 'cinema/images/NoImagen.png' %}" alt=""
+                       width="40" height="40" class="img">
+                 </div>
+                {% endif %}
+              </td>
+            {% elif forloop.counter == 6 %}
+              {% if obj.synopsis %}
+                <td class="field-synopsis" style="text-align:center;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                       height="16" fill="currentColor" class="bi bi-check red"
+                       viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                  </svg>
+                </td>
+              {% else %}
+                {{ item }}
+              {% endif %}
+           {% elif forloop.counter == 7 %}
+              {% if obj.origen %}
+               <td class="field-origen" style="text-align:center;">
+		{{obj.origen}}
+               </td>
+                {% else %}
+                  {{ item }}
+              {% endif %}
+            {% else %}
+              {{ item }}
+            {% endif %}
+          {% endfor %}
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endif %}

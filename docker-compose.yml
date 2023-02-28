@@ -1,0 +1,81 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:13.1
+    container_name: cinema_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=mediavision
+    ports:
+      - "5433:5432"
+    volumes:
+      - data:/var/lib/postgresql/data
+    networks:
+      webnet:
+        aliases:
+          - cinema_db
+  web:
+    build: .
+    working_dir: /cinema
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.local
+      - POSTGRES_ADDR=db
+      - POSTGRES_DATABASE=mediavision
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+#    command: bash -c "./wait-for-it.sh 0.0.0.0:5432 && python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8001"
+    command: bash -c "pip3 install -r all-requirements.txt && python3 manage.py collectstatic --noinput && python3 manage.py makemigrations && python3 manage.py migrate && daphne -b 0.0.0.0 -p 8001 config.asgi:django_application"
+    container_name: cinema
+    volumes:
+      - .:/cinema
+    ports:
+      - "8001:8001"
+    depends_on:
+      - db
+    networks:
+      webnet:
+        aliases:
+          - django
+  admin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=mediavision@cinema.com
+      - PGADMIN_DEFAULT_PASSWORD=postgres
+    ports:
+      - "9017:80"
+    networks:
+      webnet:
+        aliases:
+          - pgadmin
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - data:/var/lib/postgresql/data
+    networks:
+      webnet:
+        aliases:
+          - redis
+  celery:
+    build: .
+    command: bash -c "pip3 install -r all-requirements.txt && python3 manage.py makemigrations && python3 manage.py migrate && celery -A config worker --beat --scheduler django --loglevel=info"
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/cinema
+    networks:
+      webnet:
+        aliases:
+          - celery
+
+volumes:
+  data:
+
+networks:
+  webnet:

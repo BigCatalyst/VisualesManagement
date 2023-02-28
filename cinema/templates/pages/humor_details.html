@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags series_filter actor_filter %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+    .movie-single {
+      margin-top: 0;
+    }
+
+    .movie-single .movie-single-ct .mvcast-item .cast-it a {
+      color: #4280bf;
+      margin-right: 0;
+    }
+
+    .movie-single .movie-single-ct .mvcast-item .cast-it .cast-left {
+      width: 55%;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    @media screen and (max-width: 991px) {
+      .movie-img.sticky-sb {
+        top: 0 !important;
+      }
+    }
+
+    #overview .run-time span {
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans object.title_eng %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans 'Humor' %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {% trans 'Cinemateca Cubana' %}
+{% endblock %}
+{% block breadcrumb_url %}
+  /cinemateca/
+{% endblock %}
+
+{% block page-single %}
+  <div class="page-single movie-single movie_single">
+    <div class="container">
+      <div class="row ipad-width2">
+        <div class="col-md-4 col-sm-12 col-xs-12">
+          <div class="movie-img sticky-sb gradient_overlay" style="top: 0px;">
+          {% if not object.photo or object.photo == '' %}
+                <img src="{% static 'cinema/images/NoImagen.png' %}"
+                     alt="" height="435">
+          {% else %}
+                <img src="{{ object.photo.url }}"
+                    alt="" height="435">
+          {% endif %}
+          </div>
+        </div>
+        <div class="col-md-8 col-sm-12 col-xs-12">
+          <div class="movie-single-ct main-content">
+            <h1 class="bd-hd">{{ object.title_eng }}
+              </h1>
+            <div class="movie-tabs">
+              <div class="tabs">
+                <ul class="tab-links tabs-mv">
+                  <li class="active"><a href="#moviesrelated">
+                    Detalles</a></li>
+                </ul>
+                <div class="tab-content col-lg-12">
+                  <div id="moviesrelated" class="tab active">
+                    <div class="row">
+                        <div class="movie-item-style-2">
+                          <div class="mv-item-infor"style="display: flex; flex-flow: column wrap; align-content: space-between;">
+                          <h3>
+                            {% if object.year %}
+                              Año: <i style="margin-right:122px"></i><a href="#">{{ object.year }}</a>
+                              {% endif %}
+                          </h3>
+                            <h3 class="run-time">
+                              Intérprete/Capítulos:
+                              <a href="#">{% if object.interpreter %} {{ object.interpreter }}
+                              {% else %} Sin definir{% endif %}</a></h3>
+                        </div>
+                        <div class="mv-item-infor"style="display: flex; flex-flow: column wrap; align-content: space-between; margin-left:155px">
+                              <h3>Formato:<i style="margin-right:10px"></i>
+                                <a href="#">{% if object.format.format %}{{ object.format.format }} {% else %} Sin definir{% endif %} </a></h3>
+                            <h3>Definición:<a href="#">{% if object.definition %} {{ object.definition }} {% else %} Sin definir{% endif %}</a></h3>
+                          </div>
+                        
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

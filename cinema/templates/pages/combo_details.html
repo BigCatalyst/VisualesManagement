@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+    .movie-single {
+      margin-top: 0;
+    }
+
+    .movie-single .movie-single-ct .mvcast-item .cast-it a {
+      color: #4280bf;
+      margin-right: 0;
+    }
+    .row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  @media screen and (max-width: 991px){
+    .movie-img.sticky-sb {
+      top: 0 !important;
+    }
+  }
+  .movie-item-style-2 .mv-item-infor h6 a {
+    font-family: 'Dosis', sans-serif;
+    font-size: 14px;
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.movie-item-style-2:hover h6 a {
+    color: #dcf836;
+}
+
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans object.name%}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans object.name %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {% trans "Combos" %}
+{% endblock %}
+{% block breadcrumb_url %}
+  /movies/?q=combo&init=a
+{% endblock %}
+
+{% block page-single %}
+  <div class="page-single movie-single movie_single">
+    <div class="container">
+      <div class="row ipad-width2">
+        <div class="col-md-5 col-sm-12 col-xs-12">
+          <div class="movie-img sticky-sb" style="top: 0px;">
+                      {% if not object.photo or object.photo == '' %}
+                <img src="{% static 'cinema/images/NoImagen.png' %}"
+                     alt="" height="435">
+          {% else %}
+                <img src="{{ object.photo.url }}"
+                    alt="" height="435">
+          {% endif %}
+          </div>
+        </div>
+        <div class="col-md-7 col-sm-12 col-xs-12">
+          <div class="movie-single-ct main-content">
+            <h1 class="bd-hd">{{ object.name }}</h1>
+            <div class="movie-tabs">
+              <div class="tabs">
+                <ul class="tab-links tabs-mv">
+                  <li class="active"><a href="#moviesrelated">Películas del
+                    combo</a>
+                  </li>
+                </ul>
+                <div class="tab-content col-lg-12">
+                  <div id="moviesrelated" class="tab active">
+                    <div class="row">
+                      <div class="topbar-filter">
+                        <p>Se encontraron <span>
+                          {% if not object.combomovie_set %}0{% else %}
+                            {{ object.combomovie_set.count }}{% endif %}
+                          películas</span> en total</p>
+                      </div>
+                      {% for movie in object.combomovie_set.all %}
+                        <div class="movie-item-style-2">
+                          <div class="mv-item-infor">
+                            <h6>
+                              <a href="#"
+                              >{{ movie.title }}</a></h6>
+                            <p class="describe">
+                              {% if movie.description %}
+                                {{ movie.description }}
+                              {% else %}
+                                En estos momentos no tenemos la sinopsis de
+                                esta película. Disculpe las molestias que
+                                esto pueda ocacionar. Gracias.
+                              {% endif %}
+                            </p>
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

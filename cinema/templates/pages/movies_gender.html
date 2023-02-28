@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>      
+    .card {
+      /* Add shadows to create the "card" effect */
+      box-shadow: 0 4px 8px 0 rgba(158, 10, 15, 0.78);
+      transition: 0.3s;
+      background-color: #9e0a0f;
+      color: #ffffff;
+      margin-bottom: 35px;
+      position: relative;
+    }
+
+    .card p:last-child {
+      color: #ffffff;
+    }
+
+    /* On mouse-over, add a deeper shadow */
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(220, 248, 54, 0.78);
+      color: rgb(220, 248, 54);
+    }
+    
+    
+    .hidden2 {
+      display: none;
+    }
+
+    .card:hover .visible{
+      display: none;
+    }
+
+    .card:hover .hidden2{
+      display: inline-block;
+    }
+
+    .card .card-content {
+      padding: 16px 32px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 4px;
+      justify-content: center;"
+    }
+
+    /* Create four equal columns that sits next to each other */
+    .column {
+      flex: 25%;
+      max-width: 25%;
+      padding: 0 20px;
+    }
+
+    .column img {
+      vertical-align: middle;
+      width: 100%;
+    }
+
+    /* Responsive layout - makes a two column-layout instead of four columns */
+    @media screen and (max-width: 800px) {
+      .column {
+        flex: 50%;
+        max-width: 50%;
+      }
+    }
+
+    /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 600px) {
+      .column {
+        flex: 100%;
+        max-width: 100%;
+      }
+    }
+    h7 {
+     position: absolute;
+    top: 45%;
+    right: 5%;
+    font-size: 24px;
+    text-shadow: 2px 2px #FF0000;
+    color: #fff;
+    animation: blinker 1s linear infinite;
+    }
+    @keyframes blinker {
+      50% {
+        opacity: 0;
+      }
+    }
+    .card img {
+        height: 270px;
+        width: 314px;
+    }
+    .cate{
+        position: absolute;
+        bottom: 15px;
+        width: 150%;
+        left: 15px
+    }
+
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans "Películas por género" %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans "Género" %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {% trans "Movies" %}
+{% endblock %}
+{% block breadcrumb_url %}
+  /movies/
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      {% for gender in genders %}
+        <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3 col-md-offset-0
+      col-xs-offset-3 col-sm-offset-1">
+          <a href="?q={{ gender }}&init={% if gender.name == 'Drama 2' %}p{% else %}no{% endif %}">
+            <div class="card">
+              {% if not gender.photo or gender.photo == '' %}
+                    <img src="{% static 'cinema/images/NoImagen.png' %}"
+                         alt="" height="284" width="185" id="front" class="visible">
+                  {% else %}
+                        <img src="{{ gender.photo.url }}"
+                            alt="" height="284" width="185" id="front" class="visible">
+                  {% endif %}
+                  <div class="hidden2">
+                       <img src="{% static 'cinema/images/animacion/camara.png' %}"
+                            alt="" height="284" width="185">
+                       <h7>{{ gender.name }} </h7>
+                  </div>
+                  <div class="title-in visible">
+                    <div class="cate">
+                        <span class="red">
+                    {{ gender.name }}</span>
+                    
+                    </div>
+                </div>    
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+{% endblock %}

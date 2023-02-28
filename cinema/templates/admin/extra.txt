@@ -1,0 +1,179 @@
+<ul class="row nav navbar-nav flex-child-menu" style="display:flex;
+  margin-left: 15%;">
+    <li class="dropdown first col-lg-4" style="list-style-type: none;">
+      <a class="btn btn-default dropdown-toggle lv1"
+         data-toggle="dropdown" data-hover="dropdown"
+         style="background-color: transparent;">
+        <img src="{% static 'cinema/images/admin-video.png' %}" alt="">
+      </a>
+      <ul class="dropdown-menu level1" style=" margin-top: -90px; margin-left: 50px;">
+        <li style="list-style-type: none;"><a href="/admin/movie/actor/add/">Nuevo Actor</a></li>
+        <li style="list-style-type: none;"><a href="/admin/movie/movie/add/">Nueva Película</a></li>
+        <li style="list-style-type: none;"><a href="/admin/movie/combo/add/">Nuevo Combo</a></li>
+        <li style="list-style-type: none;">
+          <a href="/admin/serial/serial/add/">
+            Nueva Serie/Novela
+          </a>
+        </li>
+        <li style="list-style-type: none;">
+          <a href="/admin/movie/documental/add/">
+            Nuevo Documental
+          </a>
+        </li>
+        <li style="list-style-type: none;">
+          <a href="/admin/movie/humor/add/">
+            Nuevo Show Humorístico
+          </a>
+        </li>
+        <li class="dropdown second" style="list-style-type: none;">
+          <a href="#" class="btn btn-default dropdown-toggle lv2"
+             data-toggle="dropdown" data-hover="dropdown">
+            Listado
+          </a>
+          <ul class="dropdown-menu level2">
+            <li style="list-style-type: none;">
+              <a href="/admin/movie/actor/">
+                Actores
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/movie/movie/">
+                Películas
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/movie/combo/">
+                Combo
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/serial/serial/">
+                Series/Novelas
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/movie/documental/">
+                Documentales
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/movie/humor/">
+                Shows Humorísticos
+              </a>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+    </li>
+    <li class="dropdown first col-lg-4" style="list-style-type: none;">
+      <a class="btn btn-default dropdown-toggle lv1"
+         data-toggle="dropdown" data-hover="dropdown"
+         style="background-color: transparent;">
+        <img src="{% static 'cinema/images/admin-musica.png' %}" alt="">
+      </a>
+      <ul class="dropdown-menu level1" style=" margin-top: -90px; margin-left: 50px;">
+        <li style="list-style-type: none;"><a href="/admin/music/collection/add/">Nueva Colección</a></li>
+        <li style="list-style-type: none;"><a href="/admin/music/album/add/">Nueva Discografía</a></li>
+        <li style="list-style-type: none;"><a href="/admin/music/concert/add/">Nuevo Concierto</a></li>
+        <li style="list-style-type: none;"><a href="/admin/music/dvd/add/">Nuevo DVD</a></li>
+        <li class="dropdown second" style="list-style-type: none;">
+          <a href="#" class="btn btn-default dropdown-toggle lv2"
+             data-toggle="dropdown" data-hover="dropdown">
+            Listado
+          </a>
+          <ul class="dropdown-menu level2">
+            <li style="list-style-type: none;">
+              <a href="/admin/music/collection/">
+                Colecciones
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/music/album/">
+                Discografías
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/music/concert/">
+                Conciertos
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/music/dvd/">
+                DVDs
+              </a>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+    </li>
+    <li class="dropdown first col-lg-4" style="list-style-type: none;">
+      <a class="btn btn-default dropdown-toggle lv1"
+         data-toggle="dropdown" data-hover="dropdown"
+         style="background-color: transparent;">
+        <img src="{% static 'cinema/images/admin-administracion.png' %}" alt="">
+      </a>
+      <ul class="dropdown-menu level1" style=" margin-top: -90px; margin-left: 50px;">
+        <li style="list-style-type: none;"><a href="/admin/offer/offer/add/">Nueva Oferta</a></li>
+        <li style="list-style-type: none;"><a href="/admin/game/game/add/">Nuevo Juego</a></li>
+        <li style="list-style-type: none;"><a href="/admin/movie/sport/add/">Nuevo Deporte</a></li>
+        <li class="dropdown second" style="list-style-type: none;">
+          <a href="#" class="btn btn-default dropdown-toggle lv2"
+             data-toggle="dropdown" data-hover="dropdown">
+            Nomencladores
+          </a>
+          <ul class="dropdown-menu level2">
+            <li style="list-style-type: none;">
+              <a href="/admin/movie/gender/">
+                Géneros
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/movie/format/">
+                Formatos
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/game/category/">
+                Categorías de juegos
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="dropdown second" style="list-style-type: none;">
+          <a href="#" class="btn btn-default dropdown-toggle lv2"
+             data-toggle="dropdown" data-hover="dropdown">
+            Listado
+          </a>
+          <ul class="dropdown-menu level2">
+            <li style="list-style-type: none;">
+              <a href="/admin/offer/offer/">
+                Ofertas
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/game/game/">
+                Juegos
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/movie/sport/">
+                Deportes
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li style="list-style-type: none;"><a href="/admin/users/user/1/password/">Cambiar contraseña</a></li>
+      </ul>
+    </li>
+  </ul>
+  
+  
+  
+  
+  
+  
+  
+  
+  

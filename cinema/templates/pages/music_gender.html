@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+    .card {
+      /* Add shadows to create the "card" effect */
+      box-shadow: 0 4px 8px 0 rgba(158, 10, 15, 0.78);
+      transition: 0.3s;
+      background-color: #9e0a0f;
+      color: #ffffff;
+      margin-bottom: 35px;
+    }
+
+    .card p:last-child {
+      color: #ffffff;
+    }
+
+    /* On mouse-over, add a deeper shadow */
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(220, 248, 54, 0.78);
+      color: rgb(220, 248, 54);
+    }
+
+    .card .card-content {
+      padding: 16px 32px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 4px;
+    }
+
+    /* Create four equal columns that sits next to each other */
+    .column {
+      flex: 25%;
+      max-width: 25%;
+      padding: 0 20px;
+    }
+
+    .column img {
+      vertical-align: middle;
+      width: 100%;
+    }
+
+    /* Responsive layout - makes a two column-layout instead of four columns */
+    @media screen and (max-width: 800px) {
+      .column {
+        flex: 50%;
+        max-width: 50%;
+      }
+    }
+
+    /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 600px) {
+      .column {
+        flex: 100%;
+        max-width: 100%;
+      }
+    }
+    h7 {
+      font-size: 13px;
+    }
+   .card img {
+     height: 130px;
+    }
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans "Género musical" %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans "Género musical" %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {% trans "Música" %}
+{% endblock %}
+{% block breadcrumb_url %}
+  /music/
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      {% for gender in genders %}
+        <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3 col-md-offset-0
+      col-xs-offset-3 col-sm-offset-1">
+            <a href="?q={{ gender }}&init=a">
+              <div class="card">
+                {% if not gender.photo or gender.photo == '' %}
+                    <img src="{% static 'cinema/images/NoImagen.png' %}"
+                         alt="" height="284" width="261">
+                  {% else %}
+                        <img src="{{ gender.photo.url }}"
+                            alt="">
+                  {% endif %}
+                <div class="card-content">
+                  <h7><b>{{ gender.name }}</b></h7>
+                </div>
+              </div>
+            </a>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+{% endblock %}

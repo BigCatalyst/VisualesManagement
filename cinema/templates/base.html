@@ -1,0 +1,459 @@
+{% load static i18n compress %}<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7 no-js" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8 no-js" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en" class="no-js">
+
+
+<head>
+  <!-- Basic need -->
+  {% block title %}
+    <title>{% block head_title %}Cinema{% endblock %}</title>
+  {% endblock %}
+  <meta charset="UTF-8">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="">
+  <link rel="profile" href="#">
+
+  <!--Google Font-->
+  <link rel="stylesheet"
+        href='{% static 'css/css.css' %}?family=Dosis:400,700,500|Nunito:300,400,600'/>
+  <!-- Mobile specific meta -->
+  <meta name=viewport content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone-no">
+
+  <!-- CSS files -->
+  <link rel="stylesheet" href="{% static 'cinema/css/plugins.css' %}">
+  <link rel="stylesheet" href="{% static 'cinema/css/style.css' %}">
+  {% block css %}
+  {% endblock %}
+  <script type="text/javascript" charset="utf-8" async=""
+          src="{% static 'cinema/js/tweet.js' %}"></script>
+  <style type="text/css">
+  .description-popup {
+      display: none;
+      position: absolute;
+      top: 0;
+      z-index: 1;
+    }
+    .fancybox-margin {
+      margin-right: 17px;
+    }
+
+    .hero .gradient_overlay {
+      opacity: 0.85;
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background-color: #171717;
+    }
+
+    .ht-footer .gradient_overlay_footer {
+      opacity: 0.85;
+      position: absolute;
+      z-index: 0;
+      right: 0;
+      left: 0;
+      background-color: #171717;
+    }
+    .name {
+      display: inline-block;
+      vertical-align: middle;
+      line-height: normal;
+    }
+    @media screen and (min-width: 768px) {
+    .movie-items .movie-item:hover .description-popup{
+      display: flex;
+    }
+    .movie-items .movie-item:hover {
+      -webkit-transform: scale(1.05);
+      -moz-transform: scale(1.05);
+      -o-transform: scale(1.05);
+      -ms-transform: scale(1.05);
+      transform: scale(1.05);
+      -webkit-box-shadow: 0 5px 10px rgb(0 0 0 / 50%);
+      box-shadow: 0 5px 10px rgb(0 0 0 / 50%);
+      z-index: 1 !important;
+    }
+
+    .description-popup.left{
+      left: 105% !important;
+    }
+    .description-popup.right{
+      right: 105%;
+    }
+
+    .description-popup .h-container{
+      background: #eca5a7;
+      color: #4f5b68;
+      position: relative;
+      overflow: hidden;
+      width: 300px;
+      padding: 5px 5px 10px;
+      border-radius: 3px;
+      border-left: 2px solid #dd003f;
+    }
+    .description-popup .h-container .genres{
+      padding: 5px;
+      font-size: 12px;
+    }
+    .description-popup .h-container .genres>* {
+      margin: 8px 5px;
+    }
+    .movie-genre {
+      display: inline-block;
+    }
+    .movie-genre span {
+      padding: 4px 8px;
+      -webkit-box-align: center;
+      align-items: center;
+      border-radius: 4px;
+      color: #abb7c4;
+      background-color: #233a50;
+      font-size: inherit;
+      transition: 1s;
+    }
+  svg:not(:root).svg-inline--fa{
+    overflow: visible;
+  }
+  .svg-inline--fa.fa-w-16{
+    width: 1em;
+  }
+  .movie-genre span svg {
+    font-size: 14px;
+  }
+  .svg-inline--fa {
+    display: inline-block;
+    height: 1em;
+    vertical-align: -0.125em;
+  }
+  .description-popup .h-container .movie-name {
+    padding: 5px;
+    font-size: 15px;
+  }
+    .description-popup .h-container .movie-description {
+      font-size: 15px;
+      margin-top: 3px;
+    }
+  }
+  #body .nav {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 4rem;
+    font-size: 50px;
+    height: 100%;
+    cursor: pointer;
+    display: table;
+    text-align: center;
+}
+#body .nav.nav-next {
+    right: 0;
+}
+#body .nav>i {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+#body a.nav {
+    color: #9e0a0f;
+    cursor: pointer;
+}
+#body a.nav:hover {
+    color: #dcf836;
+}
+
+
+/*
+      css editados ***********************************************************
+    */
+
+    .breadcrumbs{
+      font-size: 14px;
+    }
+
+    .object-tools a:link, .object-tools a:visited{
+      font-size: 14px;
+    }
+
+    #changelist-search img{
+      height: 20px;
+    }
+
+    #toolbar form input[type="submit"]{
+      height: 30px;
+      font-size: 15px;
+    }
+
+    #changelist .actions label,
+    #changelist .actions select,
+    #changelist .actions .button,
+    #changelist .actions span.action-counter{
+      font-size: 12px;
+    }
+
+    #changelist .actions select{
+      height: 30px;
+    }
+
+    #changelist .actions .button{
+      height: 30px;
+    }
+
+    #changelist table thead th{
+      font-size: 12px;
+    }
+
+    .inline-group div.add-row a{
+      font-size: 12px;
+    }
+
+    label,select,input[type=submit],.module h2, a,textarea, div.help li{
+      font-size: 12px;
+    }
+
+    .help, p.help, form p.help, div.help, form div.help{
+      font-size: 12px;
+    }
+
+    /*
+      ***********************************************************
+    */
+
+  </style>
+  {% block custom_css %}
+  {% endblock %}
+
+</head>
+<body style="height: 150%;">
+<!--preloading-->
+<div id="preloader">
+  <img class="logo" src="{% static 'cinema/images/logo1.png' %}" alt=""
+       width="119"
+       height="58">
+  <div id="status">
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<!--end of preloading-->
+<!--login form popup-->
+
+<!-- BEGIN | Header -->
+<header class="ht-header">
+  <div class="container">
+    <nav class="navbar navbar-default navbar-custom">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header logo">
+        <div class="navbar-toggle" data-toggle="collapse"
+             data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <div id="nav-icon1">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <a href="{% url 'home' %}"><img class="logo"
+                                        src="{% static 'cinema/images/logo1.png' %}"
+                                        alt="" width="119" height="58"></a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse flex-parent"
+           id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav flex-child-menu menu-left">
+          <li class="hidden">
+            <a href="#page-top"></a>
+          </li>
+          <li class="dropdown first">
+            <a href="/" class="btn btn-default">
+              {% trans 'Home' %}
+            </a>
+          </li>
+          <li class="dropdown first">
+            <a class="btn btn-default dropdown-toggle lv1"
+               data-toggle="dropdown" data-hover="dropdown">
+              Videos<i class="fa fa-angle-down" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu level1">
+              <li><a href="{% url 'site_movies_page' %}">Películas</a></li>
+              <li><a href="{% url 'site_series_page' %}">Series</a></li>
+              <li><a href="/novelas/">Novelas</a></li>
+              <li><a href="/animados/">Animados</a></li>
+              <li><a href="/cinemateca/">Cinemateca Cubana</a></li>
+              <li><a href="/documentales/">Documentales</a></li>
+              <li><a href="/sports/">Deportes</a></li>
+            </ul>
+          </li>
+          <li class="dropdown first">
+            <a href="{% url 'site_music_page' %}" class="btn btn-default">
+              Música
+            </a>
+          </li>
+          <li class="dropdown first">
+            <a href="{% url 'site_games_page' %}"
+               class="btn btn-default ">
+              Juegos
+            </a>
+          </li>
+          <li class="dropdown first">
+            <a href="{% url 'site_latest_media_page' %}?q=&go=#overview"
+               class="btn btn-default">
+              Estrenos
+            </a>
+          </li>
+          <li class="dropdown first">
+            <a href="{% url 'site_offers_page' %}" class="btn btn-default ">
+              Ofertas
+            </a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav flex-child-menu menu-right">
+          {% if user and not user.is_authenticated %}
+            <li class="btn btn-danger"><a href="{% url 'account_login' %}">Entrar</a>
+            </li>
+          {% else %}
+            <li class="dropdown first">
+              <a href="/admin/"
+                 class="btn btn-default">
+                Hola {{ user.name }}!!!
+              </a>
+            </li>
+            <li class="btn btn-danger"><a href="/accounts/logout/">Salir</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
+  </div>
+</header>
+<!-- END | Header -->
+{% block common %}
+  <div class="hero common-hero">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12"
+             style="
+                display: flex;
+                align-items: center;
+                justify-content: center;"
+        >
+          <div class="hero-ct">
+            {% block breadcrumbs %}
+              {% block common_inner %}
+                <h1>{% block breadcrumb_title %}Movie Listing - Grid Fullwidth
+                {% endblock %}</h1>
+                <ul class="breadcumb">
+                  <li class="active"><a
+                          href="{% block breadcrumb_url %}#{% endblock %}">
+                    {% block breadcrumb_path %}{% endblock %}</a></li>
+                  <li><span class="ion-ios-arrow-right"></span>
+                    {% block breadcrumb_name %}movie listing{% endblock %}</li>
+                </ul>
+              {% endblock %}
+            {% endblock %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+<div style="color: #0b0b0b" id="body">
+  {% block page-single %}
+    <div class="page-single">
+      {% block content %}
+        <div class="container">
+          <div class="row">
+            {% block inner %}
+            {% endblock %}
+          </div>
+        </div>
+      {% endblock %}
+    </div>
+  {% endblock %}
+  <div id="navigation">
+		    <a class="nav nav-prev" onclick="history.back()"> <i class="fa fa-chevron-left"></i></a>
+	
+		    <a class="nav nav-next" style="margin-right: 0px;" onclick="history.forward()"><i class="fa fa-chevron-right"></i></a>
+	</div>
+</div>
+
+<!-- footer section-->
+<footer class="ht-footer">
+  <div class="container">
+    <div class="flex-parent-ft" style="display: flex; justify-content: space-around">
+      <div class="flex-child-ft item1" style="text-align:center">
+        <span>
+            <img style="margin-bottom: 30px"
+                 src="{% static 'cinema/images/google-map-marker.png' %}"
+                 alt="marker" width="50">
+        </span>
+        <h6 style="width: 210px;"><strong>{{contact.address}}</strong></h6>
+        
+      </div>
+      <div class="flex-child-ft item2" style="text-align:center">
+        <span>
+            <img style="margin-bottom: 20px"
+                 src="{% static 'cinema/images/email.png' %}"
+                 alt="marker" width="50">
+        </span>
+        <h6><strong>{{contact.email}}</strong></h6>
+      </div>
+      <div class="flex-child-ft item3" style="text-align:center">
+        <span>
+            <img style="margin-bottom: 10px"
+                 src="{% static 'cinema/images/phone.png' %}"
+                 alt="marker" width="80">
+        </span>
+        {% for phone in contact.phones %}
+        <h6><strong>{{phone}}</strong></h6>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="ft-copyright">
+    <div class="ft-left">
+      <p><a target="_blank" href="https://byt.bz">Byt</a></p>
+    </div>
+    <div class="backtotop">
+      <p><a href="#" id="back-to-top">Subir <i
+              class="ion-ios-arrow-thin-up"></i></a></p>
+    </div>
+  </div>
+</footer>
+<!-- end of footer section-->
+
+<script src="{% static 'cinema/js/jquery.js' %}"></script>
+<script src="{% static 'cinema/js/plugins.js' %}"></script>
+<script src="{% static 'cinema/js/plugins2.js' %}"></script>
+<script src="{% static 'cinema/js/custom.js' %}"></script>
+{% block custom-script %}
+{% endblock %}
+
+<script type="text/javascript">
+  
+  a=document.getElementsByTagName("div"); 
+  for (let p of a) {
+   if(p.id=="djDebugToolbarHandle"||p.id=="djDebugToolbarHandle"){ p.style.setProperty("display","none","important");}
+}
+a=document.getElementsByTagName("div"); 
+for (let p of a) {
+   if(p.id=="djDebugToolbarHandle"||p.id=="djDebugToolbarHandle"){ p.style.setProperty("display","none","important");}
+}
+</script>
+
+asdasdasdasd
+
+</body>
+
+
+</html>

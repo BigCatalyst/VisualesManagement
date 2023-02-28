@@ -1,0 +1,187 @@
+form {
+    width: 790px;
+}
+
+.changelist-form-container form {
+    width: 100%;
+}
+fieldset.games {
+    box-shadow: 0 4px 8px 0 rgba(158, 10, 15, 0.78);
+    transition: 0.3s;
+    border-radius: 8px;
+    padding: 50px;
+}
+
+label {
+    font-weight: bold;
+}
+
+ul li {
+    list-style-type: none;
+}
+.form-row {
+    width: min-content;
+    float:left;
+}
+
+.field-photo label, .field-manual label, .field-photo_back label {
+    cursor: pointer;
+    margin: 0;
+    font-weight: normal;
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    transition: 0.4s ease;
+    width: 100%;
+}
+.field-photo, .field-manual, .field-photo_back {
+    width: 320px;
+    margin-left: 45px;
+}
+.aligned .form-row input {
+    width: 300px;
+}
+.field-gender .related-widget-wrapper, .field-origen , .field-format {
+    float: left;
+    overflow: hidden;
+    width: 300px;
+}
+
+td.field-format, td.field-origen, td.field-gender {
+    float: none;
+    overflow: hidden;
+    width: 100%;
+}
+td.field-saga.nowrap {
+    white-space: initial;
+}
+.field-opciones a {
+    padding: 10px
+}
+.field-opciones img:hover {
+    transform: scale(1.5);
+}
+
+.field-category{
+    float: none;
+    overflow: hidden;
+}
+.field-saga{
+    width:365px
+}
+#id_saga {
+    width:250px
+}
+.related-widget-wrapper {
+    width:350px
+}
+.field-actor  .related-widget-wrapper {
+    width: 800px;
+}
+
+.field-photo_back {
+     margin-left: 140px;
+}
+
+#id_photo, #id_manual, #id_photo_back{
+    display: none;
+}
+
+.snapshot-generator {
+  display: block;
+  height: 1px;
+  left: 0;
+  object-fit: contain;
+  position: fixed;
+  top: 0;
+  width: 1px;
+  z-index: -1;
+}
+
+.field-origen {
+    float: left;
+    overflow: hidden;
+    width: 325px;
+}
+.form-row-no-overflows .related-widget-wrapper {
+    overflow: visible;
+    width: 320px;
+    margin-right: 20px
+}
+.vLargeTextField, .vXMLLargeTextField {
+    width: 31em;
+}
+form .chips .chip, form .chips .control {
+    font-size: 1.5rem;
+    line-height: 1.9rem;
+    vertical-align: top;
+}
+.alone .field-photo{
+float:left;
+}
+
+.alone.name .field-name {
+    float: none;
+}
+.alone2.name .field-title, .alone2.name .field-year {
+    float: none;
+}
+.alone2.name .field-photo {
+    float:left;
+}
+.alone2.name .field-photo_back {
+   margin-left: 25px;
+}
+
+#content-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.object-tools {
+    font-size: 10px;
+    font-weight: bold;
+    padding-left: 0;
+    float: right;
+    position: relative;
+    margin-top: -48px;
+    padding-bottom: 40px;
+
+}
+.field-opciones img {
+    width: 29px;
+    height: 29px;
+}
+
+.image-cropper {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-left: 25px !important;
+}
+
+td.field-photo .image-cropper {
+    display: block;
+    margin-left: auto !important;
+    margin-right: auto;
+}
+td.field-albums  {
+    text-align: left;
+    
+}
+
+#flag_id_origen {
+    display: none;
+}
+.related-widget-wrapper a img {
+    transform: scale(1.8);
+}
+.related-widget-wrapper a:hover img {
+    transform: scale(2.3);
+}
+
+#id_language {
+    width: 300px
+}

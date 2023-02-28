@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags music_filter actor_filter %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+   <script src="{% static 'cinema/js/js-image-zoom/js-image-zoom.js' %}"></script>
+  <style>
+    .movie-single {
+      margin-top: 0;
+    }
+
+    .movie-single .movie-single-ct .mvcast-item .cast-it a {
+      color: #4280bf;
+      margin-right: 0;
+    }
+
+    .movie-single .movie-single-ct .mvcast-item .cast-it .cast-left {
+      width: 55%;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    @media screen and (max-width: 991px) {
+      .movie-img.sticky-sb {
+        top: 0 !important;
+      }
+    }
+
+    #overview .run-time span {
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+    .img-transform {
+      display: block;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .img-zoom-result {
+      border: 1px solid #d4d4d4;
+      /*set the size of the result div:*/
+      width: 300px;
+      height: 300px;
+    }
+
+    h7 {
+        position: relative;
+        font-size: 24px;
+        text-shadow: 2px 2px #FF0000;
+        color: #fff;
+        animation: blinker 1s linear infinite;
+    }
+    @keyframes blinker {
+      50% {
+        opacity: 0;
+      }
+    }
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans object.title %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans object.title %}
+{% endblock %}
+{% block breadcrumb_path %}
+    {% if object|isinstance_dvd %}
+        DVD
+    {% else %}
+        Discografía
+    {% endif %}
+{% endblock %}
+{% block breadcrumb_url %}
+    {% if object|isinstance_dvd %}
+        /music/?q=dvd&init=a
+    {% else %}
+        /music/?q=discografía&init=a
+    {% endif %}
+  
+{% endblock %}
+
+{% block page-single %}
+  <div class="page-single movie-single movie_single">
+    <div class="container">
+      <div class="row ipad-width2">
+        <div class="col-md-6 col-sm-12 col-xs-12">
+            <h7>Click en la foto para ver la cara B</h7>
+          <div class="img-transform transform-horizontal movie-img sticky-sb"
+               style="top: 0px;"
+          >
+
+          {% if not object.photo or object.photo == '' %}
+                <img id="front" src="{% static 'cinema/images/NoImagen.png' %}"
+                     alt="" height="435" class="item item-1">
+          {% else %}
+                <img id="front" src="{{ object.photo.url }}"
+                 alt="" height="435" class="item item-1">
+          {% endif %}
+          <div class="img-container">
+          {% if not object.photo_back or object.photo_back == '' %}
+                <img id="back" src="{% static 'cinema/images/NoImagen.png' %}"
+                     alt="" height="435" class="item item-2 img-zoom-lens">
+          {% else %}
+                <img id="back" src="{{ object.photo_back.url }}"
+                 alt="" height="435" class="item item-2">
+          {% endif %}
+          </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12 col-xs-12">
+          <div class="movie-single-ct main-content">
+            <h1 class="bd-hd">{{ object.title }}
+            </h1>
+            <div class="movie-tabs">
+              <div class="tabs">
+                <ul class="tab-links tabs-mv">
+                  <li class="active"><a href="#details"> Detalles</a></li>
+                </ul>
+                <div class="tab-content col-lg-12" style="margin-left:20px">
+                  <div id="details" class="tab active">
+                    <div class="row">
+                      <div class="movie-item-style-2" style="border-bottom: none;">
+                        <div class="mv-item-infor">
+                          <h3>
+                            {% if object|isinstance_dvd %}
+                            Autor:<i style="margin-right:10px"></i>
+                            <a href="{% url 'site_author_detail' object.author.id %}?q=dvd"
+                            >{{ object.author.name }}
+                            </a>
+                          {% else %}
+                              Autor:<i style="margin-right:10px"></i>
+                              <a href="{% url 'site_author_detail' object.author.id %}?q=discografía"
+                              >{{ object.author.name }}
+                              </a>
+                            {% endif %}
+                          </h3>
+                          <h3>Título:<i style="margin-right:10px"></i> <a href="#">{{ object.title }}</a> </h3>
+                          <h3>Año: <i style="margin-right:22px"></i>
+                            {% if object.year %}
+                              <a href="#">{{ object.year }}</a>
+                              {% endif %}
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                  {% if object|isinstance_dvd %}
+                    <div class="row">     
+                      {% for movie in object.dvdsong_set.all %}
+                        <div class="movie-item-style-2">
+                          <div class="mv-item-infor">
+                            <h6>
+                              <a href="#"
+                              >{% if movie.title %}{{ movie.title }}
+                              {% else %}Título sin definir{% endif %}
+                              </a></h6>
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  {% else %}
+                    <div class="row">
+                      <div class="topbar-filter">
+                        <p>Se encontraron <span>
+                          {% if not object.albumsong_set %}0{% else %}
+                            {{ object.albumsong_set.count }}{% endif %}
+                          canciones</span> en total</p>
+                      </div>
+                      {% for movie in object.albumsong_set.all %}
+                        <div class="movie-item-style-2">
+                          <div class="mv-item-infor">
+                            <h6>
+                              <a href="#"
+                              >{% if movie.title %}{{ movie.title }}
+                                {% else %}Título sin definir{% endif %}
+                              </a></h6>
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block custom-script %}
+  <script>
+  var options1 = {
+    width: 330,
+    zoomWidth: 500,
+    offset: {vertical: 0, horizontal: 10}
+    };
+    var options2 = {
+    fillContainer: true,
+    offset: {vertical: 0, horizontal: 110},
+    zoomPosition: "right"
+    };
+    new ImageZoom(document.getElementById("img-container"), options2);
+  </script>
+{% endblock %}

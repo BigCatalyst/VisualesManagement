@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load actor_filter %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+    .movie-single {
+      margin-top: 0;
+    }
+
+    .movie-single .movie-single-ct .mvcast-item .cast-it a {
+      color: #4280bf;
+      margin-right: 0;
+    }
+    .row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  @media screen and (max-width: 991px){
+    .movie-img.sticky-sb {
+      top: 0 !important;
+    }
+  }
+
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans object.title%}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans object.title %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {% trans "Sagas" %}
+{% endblock %}
+{% block breadcrumb_url %}
+  /movies/?q=saga&init=no
+{% endblock %}
+
+{% block page-single %}
+  <div class="page-single movie-single movie_single">
+    <div class="container">
+      <div class="row ipad-width2">
+        <div class="col-md-4 col-sm-12 col-xs-12">
+          <div class="movie-img sticky-sb" style="top: 0px;">
+            {% if not object.photo or object.photo == '' %}
+              {% if object.movie_set|first_image %}
+                <img src="{{ object.movie_set|first_image }}"
+                     alt="" height="435">
+              {% else %}
+                <img src="{% static 'cinema/images/NoImagen.png' %}"
+                     alt="" height="435">
+              {% endif %}
+            {% else %}
+              <img src="{{ object.photo.url }}"
+                   alt="" height="435">
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-8 col-sm-12 col-xs-12">
+          <div class="movie-single-ct main-content">
+            <h1 class="bd-hd">{{ object.title }}</h1>
+            <div class="movie-tabs">
+              <div class="tabs">
+                <ul class="tab-links tabs-mv">
+                  <li class="active"><a href="#moviesrelated">Películas de
+                    la saga</a>
+                  </li>
+                </ul>
+                <div class="tab-content col-lg-12">
+                  <div id="moviesrelated" class="tab active">
+                    <div class="row">
+                      <div class="topbar-filter">
+                        <p>Se encontraron <span>
+                          {% if not object.movie_set %}0{% else %}
+                            {{ object.movie_set.count }}{% endif %}
+                          películas</span> en total</p>
+                      </div>
+                      {% for movie in object|ordermovie %}
+                        <div class="movie-item-style-2">
+                        {% if not movie.photo or movie.photo == '' %}
+                            <img src="{% static 'cinema/images/NoImagen.png' %}"
+                                 alt="">
+                          {% else %}
+                                <img src="{{ movie.photo.url }}"
+                                    alt="" >
+                          {% endif %}
+                          <div class="mv-item-infor">
+                            <h6>
+                              <a href="{% url 'site_movies_detail' movie.id %}"
+                              >{{ movie.title_eng }}
+                                <span style="padding-left:20px">({{ movie.year }})</span></a></h6>
+                            <p class="describe">
+                              {% if movie.synopsis %}
+                                {{ movie.synopsis|truncatewords:60 }}
+                              {% else %}
+                                En estos momentos no tenemos la sinopsis de
+                                esta película. Disculpe las molestias que
+                                esto pueda ocacionar. Gracias.
+                              {% endif %}
+                            </p>
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+    .card {
+      /* Add shadows to create the "card" effect */
+      box-shadow: 0 4px 8px 0 rgba(158, 10, 15, 0.78);
+      transition: 0.3s;
+      background-color: #9e0a0f;
+      color: #ffffff;
+      margin-bottom: 35px;
+    }
+
+    .card p:last-child {
+      color: #ffffff;
+    }
+
+    /* On mouse-over, add a deeper shadow */
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(220, 248, 54, 0.78);
+      color: rgb(220, 248, 54);
+    }
+
+    .card .card-content {
+      padding: 16px 32px;
+    }
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans "Music" %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans "Music" %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {% trans "Home" %}
+{% endblock %}
+{% block breadcrumb_url %}
+  /
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3 col-md-offset-0
+      col-xs-offset-3 col-sm-offset-1">
+        <a href="{% url 'site_music_genders_page' %}"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/M1.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/M1_0.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/M1_0.jpg' %}"
+                 alt="alphabetic search">
+            <div class="card-content">
+              <h4><b>Colecciones</b></h4>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3 col-md-offset-0
+      col-xs-offset-3 col-sm-offset-1">
+        <a href="{% url 'site_music_page' %}?q=discografía&init=a"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/M2.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/M2_0.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/M2_0.jpg' %}"
+                 alt="alphabetic search">
+            <div class="card-content">
+              <h4><b>Discografía</b></h4>
+            </div>
+          </div>
+        </a>
+
+      </div>
+      <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3 col-md-offset-0
+      col-xs-offset-3 col-sm-offset-1">
+        <a href="{% url 'site_music_page' %}?q=concierto&init=a"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/M3.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/M3_0.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/M3_0.jpg' %}"
+                 alt="alphabetic search">
+            <div class="card-content">
+              <h4><b>Conciertos</b></h4>
+            </div>
+          </div>
+        </a>
+
+      </div>
+      <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3 col-md-offset-0
+      col-xs-offset-3 col-sm-offset-1">
+        <a href="{% url 'site_music_page' %}?q=dvd&init=a"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/musica_dvd.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/musica_dvd_0.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/musica_dvd_0.jpg' %}"
+                 alt="alphabetic search">
+            <div class="card-content">
+              <h4><b>Música en DVD</b></h4>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

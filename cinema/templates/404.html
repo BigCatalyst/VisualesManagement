@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}<title>Page not found</title>{% endblock %}
+
+{% block content %}
+  {% block search %}
+  {% endblock %}
+  <div class="page-single-2">
+    <div class="container">
+      <div class="row">
+        <div class="middle-content">
+          <a href="/"><img class="md-logo" src="{% static 'cinema/images/logo1.png' %}"
+                                      alt=""></a>
+          <img src="{% static 'cinema/images/uploads/err-img.png' %}" alt="">
+          <h1>Página no encontrada</h1>
+          <a href="/" class="redbtn">Ir al Inicio</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

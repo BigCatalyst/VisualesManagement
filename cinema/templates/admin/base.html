@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
+  {% if not is_popup and is_nav_sidebar_enabled %}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/nav_sidebar.css" %}">
+    <script src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>
+  {% endif %}
+  {% block extrastyle %}{% endblock %}
+  {% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">{% endif %}
+  {% block extrahead %}{{ block.super }}
+    <style>
+td, th {
+  font-size: 13px;
+  line-height: 16px;
+  border-bottom: 1px solid var(--hairline-color);
+  vertical-align: top;
+  padding: 8px;
+  width: max-content;
+}
+    thead{
+      background-color: #9e0a0f8a;
+    }
+div.breadcrumbs a {
+  color: #c4dce8;
+}
+    .image-cropper {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-left: 50px
+}
+.image-cropper:hover {
+    -webkit-transform: scale(1.05);
+      -moz-transform: scale(1.05);
+      -o-transform: scale(1.05);
+      -ms-transform: scale(1.05);
+      transform: scale(1.05);
+      -webkit-box-shadow: 0 5px 10px rgb(0 0 0 / 50%);
+      box-shadow: 0 5px 10px rgb(0 0 0 / 50%);
+      z-index: 1 !important;
+}
+.img {
+  display: inline;
+  margin: 0 auto;
+  height: 100%;
+  width: 250px;
+}
+.text, td {
+    text-align: center
+}
+.field-synopsis svg {
+    color: red;
+    transform: scale(2.15);
+}
+}
+td.field-format {
+    float: left;
+    overflow: hidden;
+    width: 100% !important;
+}
+      p{
+        color: #222222 !important;
+      }
+      :root {
+        --body-fg: #222222;
+        --body-quiet-color: #222222;
+        --body-bg: #9e0a0f38;
+        --breadcrumbs-bg: #9774d500;
+        --darkened-bg: #21212100;
+        --hairline-color: #21212100;
+        --default-button-bg: #dd003f;
+        --link-fg: #222222;
+        --link-hover-color: #090808;
+        --selected-row: #62c2c0;
+        --selected-bg: #62c2c0;
+        --error-fg: #bb0000;
+      }
+      #content-main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+     }
+     .object-tools {
+        font-size: 10px;
+        font-weight: bold;
+        padding-left: 0;
+        float: right;
+        position: relative;
+        margin-top: -48px;
+        padding-bottom: 40px;
+        align-self: end;
+     }
+      .submit-row a.deletelink {
+        display: block;
+        background: var(--delete-button-bg);
+        border-radius: 4px;
+        padding: 10px 15px;
+        height: 35px;
+        line-height: 15px;
+        color: var(--button-fg);
+      }
+    #toolbar #searchbar {
+        height: 30px;
+        border: 1px solid var(--border-color);
+        padding: 2px 5px;
+        margin: 0;
+        vertical-align: top;
+        font-size: 13px;
+        max-width: 100%;
+    }
+    th {
+        text-align: left;
+    }
+    </style>
+  {% endblock %}
+  {% block custom-style %}
+  {% endblock %}
+{% endblock %}
+
+{% block custom-script %}
+  <script>
+    $("body").first()[0].childNodes[0].remove();
+  </script>
+{% endblock %}
+{% block page-single %}
+  <div class="page-single">
+    <div class="container">
+      <div class="row">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

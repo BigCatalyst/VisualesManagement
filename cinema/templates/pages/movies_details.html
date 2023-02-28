@@ -1,0 +1,260 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags actor_filter %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+    .movie-single {
+      margin-top: 0;
+    }
+
+    .movie-single .movie-single-ct .mvcast-item .cast-it a {
+      color: #4280bf;
+      margin-right: 0;
+    }
+
+    .movie-single .movie-single-ct .mvcast-item .cast-it .cast-left {
+      width: 35%;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .movie-single .movie-single-ct .mvcast-item .cast-it p {
+      width: 65%;
+      text-align: left;
+    }
+
+    @media screen and (max-width: 991px) {
+      .movie-img.sticky-sb {
+        top: 0 !important;
+      }
+    }
+
+    #overview .run-time span {
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans object.title_eng %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans object.title_eng %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {% trans "Movies" %}
+{% endblock %}
+{% block breadcrumb_url %}
+  /movies/
+{% endblock %}
+
+{% block page-single %}
+  <div class="page-single movie-single movie_single">
+    <div class="container">
+      <div class="row ipad-width2">
+        <div class="col-md-4 col-sm-12 col-xs-12">
+          <div class="movie-img sticky-sb gradient_overlay" style="top: 0px;">
+            {% if not object.photo or object.photo == '' %}
+                <img src="{% static 'cinema/images/NoImagen.png' %}"
+                     alt="" height="435">
+          {% else %}
+                <img src="{{ object.photo.url }}"
+                    alt="" height="435">
+          {% endif %}
+          {% if object.definition %}
+          <div class="title-in">
+                    <div class="cate">
+                        <span class="red"><a href="#" tabindex="0">
+                    {{ object.definition }}</a></span>
+                      
+                    </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-8 col-sm-12 col-xs-12">
+          <div class="movie-single-ct main-content">
+            <div class="movie-tabs">
+              <div class="tabs">
+                <ul class="tab-links tabs-mv">
+                  <li class="active"><a href="#overview">Detalles</a></li>
+                  <li><a href="#cast"> Actores </a></li>
+                  <li><a href="#moviesrelated"> Sagas</a></li>
+                </ul>
+                <div class="tab-content col-lg-12">
+                  <div id="overview" class="tab active">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 col-xs-12" >
+                        <div style="border-bottom: 1px solid #233a50;">
+                            <h3>Título en Inglés:
+                                  <a href="#" style="padding-left: 24px">{{ object.title_eng }}</a></h3>
+                            <h3>Título en Español:
+                                 {% if object.title %} <a href="#">{{ object.title }}</a>{% endif %}</h3>
+                        </div>
+                        <br/>
+                        <h3>Sinopsis:</h3>
+                        {% if object.synopsis %}
+                          {% if object.synopsis|wordcount > 50 %}
+                            <p id="synopsis"
+                               style="border-bottom: 1px solid #233a50;padding: 20px 20px 20px 0;"
+                            >
+                              {{ object.synopsis|truncatewords:50 }}
+                              <a style="cursor: pointer; justify-content:center; color: black; font-weight:700"
+                                 onclick="this.style.display='none'; showText();"
+                              >
+                                Leer más...
+                              </a>
+                            </p>
+
+                          {% else %}
+                            <p style="border-bottom: 1px solid #233a50;">
+                              {{ object.synopsis }}</p>
+                          {% endif %}
+                        {% else %}
+                          <p style="border-bottom: 1px solid #233a50;padding: 20px 20px 20px 0;">
+                            En estos momentos no tenemos la sinopsis de
+                            esta película. Disculpe las molestias que
+                            esto pueda ocacionar. Gracias.
+                          </p>
+                        {% endif %}
+                        <div class="sb-it" style="display: flex; justify-content: flex-start; border-bottom: 1px solid #233a50;padding: 20px 20px 20px 0;">
+                            <div>
+                            <h3>Géneros:<i style="margin-right:20px"></i>
+                               <a href="/movies/gender/?q={{ object.gender }}">
+                                 {{ object.gender.name }}</a></h3>
+                            <h3>Año:<i style="margin-right:55px"></i>
+                                {% if object.year %}
+                                  <a href="#">{{ object.year }}</a>
+                                  {% endif %}
+                              </h3>
+                              <h3 class="run-time tags">
+                                Duración:<i style="margin-right:20px"></i>
+                              <a href="#">{% if object.duration %}
+                                {{ object.duration }}
+                              {% else %} Sin definir{% endif %}</a></h3>
+                              <h3>Formato:<i style="margin-right:25px"></i>
+                                  <a>{% if object.format.format %}
+                                    {{ object.format.format }}{% else %} Sin definir{% endif %}</a></h3>
+                            </div>
+                            <div style="margin-left:20%">
+                              <h3>Sub-género:
+                                <a href="#">{% if object.sub_gender %}{{ object.sub_gender }} {% else %}Sin definir {% endif %}</a></h3>
+                              <h3>País:<i style="margin-right:55px"></i> <a href="#">{{ object.origen }}</a></h3>
+                              <h3>Idioma:<i style="margin-right:35px"></i> <a href="#">{% if object.language %} {{ object.language }}{% else %} Sin definir{% endif %}</a></h3>   
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-xs-12 col-sm-12">
+                        <div class="sb-it">
+                          <h3>Actores: </h3>
+                          <p>
+                            {% for actor in movie.actor.all %}
+                              <a href="{% url 'site_actors_detail' actor.id %}">
+                                {{ actor.name }}{% if not forloop.last %},{% endif %}</a>
+                            {% endfor %}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="cast" class="tab">
+                    <div class="row">
+                      <div class="title-hd-sm">
+                        <h4>Protagonistas</h4>
+                      </div>
+                      <div class="mvcast-item">
+                        {% for actor in object.actor.all %}
+                          <div class="cast-it">
+                            <div class="cast-left">
+                              {% if actor.photo %}
+                                <img src="{{ actor.photo.url }}"
+                                     alt="" width="40" height="40" style="width: 80px;height: 80px;">
+                              {% else %}
+                                <h4>
+                                  {{ actor.name|make_list|slice:':1'|join:'' }}{{ actor.name|last_word|make_list|slice:':1'|join:'' }}</h4>
+                              {% endif %}
+                              <a href="{% url 'site_actors_detail' actor.id %}"
+                              >{{ actor.name }}</a>
+                            </div>
+                            <p>
+                              {% for movie in actor.movie_set.all %}
+                                <a href="{% url 'site_movies_detail' movie.id %}"
+                                >{{ movie.title_eng }}{% if not forloop.last %}
+                                  , {% endif %}</a>
+                              {% endfor %}
+                            </p>
+                          </div>
+                        {% endfor %}
+                      </div>
+                      <!-- //== -->
+                    </div>
+                  </div>
+                  <div id="moviesrelated" class="tab">
+                    <div class="row">
+                      <div class="topbar-filter">
+                        <p>Se encontraron <span>
+                          {% if not object.saga.movie_set %}0{% else %}
+                            {{ object.saga.movie_set.count }}{% endif %}
+                          películas</span> en total</p>
+                      </div>
+                      {% for movie in object.saga.movie_set.all %}
+                        <div class="movie-item-style-2">
+                        {% if not movie.photo or movie.photo == '' %}
+                                <img src="{% static 'cinema/images/NoImagen.png' %}"
+                                     alt="">
+                          {% else %}
+                                <img src="{{ movie.photo.url }}"
+                                    alt="">
+                          {% endif %}
+                          <div class="mv-item-infor">
+                            <h6>
+                              <a href="{% url 'site_movies_detail' movie.id %}"
+                              >{{ movie.title_eng }}
+                                <span>({{ movie.year }})</span></a></h6>
+                            <p class="describe">
+                              {% if movie.synopsis %}
+                                {{ movie.synopsis|safe|truncatewords:25 }}
+                              {% else %}
+                                En estos momentos no tenemos la sinopsis de
+                                esta película. Disculpe las molestias que
+                                esto pueda ocacionar. Gracias.
+                              {% endif %}
+                            </p>
+                            <p class="run-time"> Duración: {{ movie.duration }}
+                              <span>Formato:
+                            {{ movie.format.format }} </span>
+                              {% if movie.definition %} . <span>Calidad:
+                                {{ movie.definition }}</span>{% endif %}</p>
+                            <p>Actores: {% for actor in movie.actor.all %}
+                              <a href="{% url 'site_actors_detail' actor.id %}">
+                                {{ actor.name }}{% if not forloop.last %}
+                                  ,{% endif %}
+                              </a>
+                            {% endfor %}</p>
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block custom-script %}
+  <script>
+  function showText(){
+    $("#synopsis").text("{{ object.synopsis|safe }}");
+  }
+  </script>
+{% endblock %}

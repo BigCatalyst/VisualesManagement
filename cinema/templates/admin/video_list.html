@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+    .card {
+      /* Add shadows to create the "card" effect */
+      box-shadow: 0 4px 8px 0 rgba(158, 10, 15, 0.78);
+      transition: 0.3s;
+      background-color: #9e0a0f;
+      color: #ffffff;
+      margin-bottom: 35px;
+    }
+
+    .card p:last-child {
+      color: #ffffff;
+    }
+
+    /* On mouse-over, add a deeper shadow */
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(220, 248, 54, 0.78);
+      color: rgb(220, 248, 54);
+    }
+
+    .card .card-content {
+      padding: 16px 32px;
+    }
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans "Listados" %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans "Videos" %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {% trans "Admin" %}
+{% endblock %}
+{% block breadcrumb_url %}
+  /admin/
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4 col-xs-offset-2 col-lg-offset-0">
+        <a href="/admin/movie/movie/"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/2.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/2_1.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/2_1.jpg' %}"
+                 alt="alphabetic search">
+            <div class="card-content">
+              <h4><b>Listado de Películas</b></h4>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4 col-lg-offset-0 col-xs-offset-2">
+        <a href="/admin/movie/combo/"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/10.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/10_1.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/10_1.jpg' %}"
+                 alt="alphabetic search">
+            <div class="card-content">
+              <h4><b>Listado de Combos</b></h4>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4 col-xs-offset-2 col-lg-offset-0">
+        <a href="/admin/movie/actor/"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/9.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/9_1.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/9_1.jpg' %}"
+                 alt="alphabetic search">
+            <div class="card-content">
+              <h4><b>Listado de Actores</b></h4>
+            </div>
+          </div>
+        </a>
+
+      </div>
+      <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4 col-xs-offset-2 col-lg-offset-0">
+        <a href="/admin/serial/serial/"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/serie1.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/serie1_0.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/serie1_0.jpg' %}"
+                 alt="alphabetic search">
+            <div class="card-content">
+              <h4><b>Listado de Series</b></h4>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4 col-xs-offset-2 col-lg-offset-0">
+        <a href="/admin/serial/novela/"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/N1.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/N1_0.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/N1_0.jpg' %}"
+                 alt="alphabetic search">
+            <div class="card-content">
+              <h4><b>Listado de Novelas</b></h4>
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4 col-xs-offset-2 col-lg-offset-0">
+        <a href="/admin/movie/documental/"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/documentales.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/documentales_0.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/documentales_0.jpg' %}"
+                 alt="alphabetic search">
+            <div class="card-content">
+              <h4><b>Listado de Documentales</b></h4>
+            </div>
+          </div>
+        </a>
+
+      </div>
+      
+      <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4 col-lg-offset-0 col-xs-offset-2">
+        <a href="/admin/movie/humor/"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/humor_cubano.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/humor_cubano_0.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/humor_cubano_0.jpg' %}"
+                 alt="alphabetic search">
+            <div class="card-content">
+              <h4><b>Listado de Humorísticos</b></h4>
+            </div>
+          </div>
+        </a>
+      </div>
+    
+    </div>
+
+  </div>
+{% endblock %}

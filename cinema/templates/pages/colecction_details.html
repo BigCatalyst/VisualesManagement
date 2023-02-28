@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags series_filter actor_filter %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+    .movie-single {
+      margin-top: 0;
+    }
+
+    .movie-single .movie-single-ct .mvcast-item .cast-it a {
+      color: #4280bf;
+      margin-right: 0;
+    }
+
+    .movie-single .movie-single-ct .mvcast-item .cast-it .cast-left {
+      width: 55%;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .topbar-filter .success {
+      margin-left: auto;
+      padding-right:200px
+    }
+    .success-badges {
+      display:inline-flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-left: 25%;
+    }
+    h6 a  {
+      color:#fff;
+    }
+
+
+    @media (max-width: 767px) {
+      .topbar-filter {
+        display: flex;
+        flex-direction: row;
+        padding: 15px 0;
+      }
+      .topbar-filter .success {
+        margin-left: auto;
+        padding-right:125px !important;
+      }
+      .success-badges {
+        display:inline-flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 125px;
+      }
+      .success-badge-e {
+        padding-right: 150px;
+        margin-left: auto;
+      }
+      .success-badge-v {
+        padding-right: 100px;
+        margin-left: auto;
+      }
+    }
+    @media screen and (max-width: 991px) {
+      .movie-img.sticky-sb {
+        top: 0 !important;
+      }
+    }
+
+    #overview .run-time span {
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+
+    @media (max-width: 767px) {
+      .movie-item-style-2 {
+        display: flex;
+        flex-direction: row;
+      }
+    }
+    .movie-item-style-2 {
+      border-bottom: none !important;
+    }
+    .topbar-filter2 {
+      display: flex;
+      margin-bottom: 30px;
+      border-top: 1px solid #405266;
+      border-bottom: 1px solid #405266;
+      width: 100%;
+      justify-content: space-between;
+    }
+    .items3 {
+      display: flex;
+      margin-bottom: 30px;
+      width: 100%;
+      justify-content: space-between;
+    }
+    .topbar-filter2 .success, .items3 .success {
+      margin-left: auto;
+      padding-right: 50px;
+    }
+    .topbar-filter2 .video, .items3 .video {
+      padding-right: 50px;
+    }
+    svg {
+        transform: scale(1.6);
+    }
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans object.name %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans request.GET.q %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {{ request.GET.q }}
+{% endblock %}
+{% block breadcrumb_url %}
+  /music/gender/?q={{ request.GET.q }}
+{% endblock %}
+
+{% block page-single %}
+  <div class="page-single movie-single movie_single">
+    <div class="container">
+      <div class="row ipad-width2">
+        <div class="col-md-4 col-sm-12 col-xs-12">
+          <div class="movie-img sticky-sb gradient_overlay" style="top: 0px;">
+                      {% if not object.photo or object.photo == '' %}
+                <img src="{% static 'cinema/images/NoImagen.png' %}"
+                     alt="" height="435">
+          {% else %}
+                <img src="{{ object.photo.url }}"
+                    alt="" height="435">
+          {% endif %}
+          </div>
+        </div>
+        <div class="col-md-8 col-sm-12 col-xs-12">
+          <div class="movie-single-ct main-content">
+            <h1 class="bd-hd">{{ object.name }}
+            </h1>
+            <div class="movie-tabs">
+              <div class="tabs">
+                <div class="tab-content col-lg-12" style="margin-left:20px">
+                  <div id="moviesrelated" class="tab active">
+                    <div class="row">
+                    <h3>Género: <a href="#moviesrelated">  {{ object.gender|title }}</a></h3>
+                      <div class="topbar-filter">
+                        <p>Se encontraron <span>
+                          {% if not object.song_set %}0{% else %}
+                            {{ object.song_set.count }}{% endif %}
+                          canciones</span> en total</p>
+                      </div>
+                      <div class="topbar-filter2">
+                        <h6><a href="#"
+                               style="color:black">Título
+                        </a></h6>
+                        <h6 class="success"><a href="#"
+                          style="color:black">Éxito
+                          </a></h6>
+                        <h6 class="video"><a href="#"
+                               style="color:black">Video
+                          </a></h6>
+                      </div>
+                      {% for movie in object.song_set.all %}
+                        <div class="items3">
+                            <h6>
+                              <a href="#"
+                              >{{ movie.title }}
+                              </a></h6>
+                            <h6 class="success">
+                              {% if movie.success %}
+                                <a href="#" style="visibility: visible">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="45"
+                                     height="16" fill="currentColor" class="bi bi-check red"
+                                     viewBox="0 0 16 16">
+                                  <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                </svg>
+                                </a>
+                                {% else %}
+                                <a href="#" style="visibility: hidden;">
+                                  <svg xmlns="http://www.w3.org/2000/svg"
+                                       width="45"
+                                       height="16" fill="currentColor" class="bi bi-check red"
+                                       viewBox="0 0 16 16">
+                                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                  </svg>
+                                </a>
+                              {% endif %}
+                            </h6>
+                            <h6 class="video"
+                            >
+                              {% if movie.video %}
+                                <a href="#" style="visibility: visible">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="45"
+                                     height="16" fill="currentColor" class="bi bi-check red"
+                                     viewBox="0 0 16 16">
+                                  <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                </svg></a>
+                              {% else %}
+                                <a href="#" style="visibility: hidden">
+                                  <svg xmlns="http://www.w3.org/2000/svg"
+                                       width="45"
+                                       height="16" fill="currentColor" class="bi bi-check red"
+                                       viewBox="0 0 16 16">
+                                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                  </svg>
+                                </a>
+                              {% endif %}
+                            </h6>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

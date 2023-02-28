@@ -1,0 +1,142 @@
+fieldset.games {
+    box-shadow: 0 4px 8px 0 rgba(158, 10, 15, 0.78);
+    transition: 0.3s;
+    border-radius: 8px;
+    padding: 50px;
+}
+
+label {
+    font-weight: bold;
+}
+
+ul li {
+    list-style-type: none;
+}
+.form-row {
+    width: min-content;
+    float:left;
+}
+
+
+
+.field-photo label, .field-manual label, .field-photo_back label {
+    cursor: pointer;
+    margin: 0;
+    font-weight: normal;
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    transition: 0.4s ease;
+    width: 100%;
+}
+.field-photo, .field-manual, .field-photo_back {
+    width: 320px;
+    margin-left: 45px;
+    height: 350px
+}
+td.field-photo {
+height: auto;
+}
+.aligned .form-row input {
+    width: 300px;
+}
+.field-opciones img {
+    width: 29px;
+    height: 29px;
+}
+
+.image-cropper {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-left: 25px !important;
+}
+
+td.field-photo .image-cropper {
+    display: block;
+    margin-left: auto !important;
+    margin-right: auto;
+}
+.field-gender .related-widget-wrapper, .field-origen , .field-format {
+    float: left;
+    overflow: hidden;
+    width: 300px;
+}
+.field-format {
+    float: left;
+    overflow: hidden;
+    width: 200px;
+}
+td.field-format {
+    float: left;
+    overflow: hidden;
+    width: 100%;
+}
+
+.field-opciones a {
+    padding: 10px
+}
+.field-opciones img:hover {
+    transform: scale(1.5);
+}
+
+
+.field-category{
+    float: none;
+    overflow: hidden;
+}
+.field-saga{
+    width:370px
+}
+
+
+.field-photo_back {
+     margin-left: 140px;
+}
+
+#id_photo, #id_manual, #id_photo_back{
+    display: none;
+}
+
+.snapshot-generator {
+  display: block;
+  height: 1px;
+  left: 0;
+  object-fit: contain;
+  position: fixed;
+  top: 0;
+  width: 1px;
+  z-index: -1;
+}
+
+.field-origen {
+    float: left;
+    overflow: hidden;
+    width: 325px;
+}
+.form-row-no-overflows .related-widget-wrapper {
+    overflow: visible;
+    width: 320px;
+    margin-right: 20px
+}
+.vLargeTextField, .vXMLLargeTextField {
+    width: 31em;
+}
+form .chips .chip, form .chips .control {
+    font-size: 1.5rem;
+    line-height: 1.9rem;
+    vertical-align: top;
+}
+.alone .field-photo{
+float:none;
+}
+#id_type {
+    width: 300px
+}
+.field-origen input {
+    height: auto;
+}
+.field-definition {
+    margin-right: 140px;
+}

@@ -1,0 +1,480 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags series_filter actor_filter %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+@media (min-width: 768px){
+    .container {
+        width: 750px;
+    }
+    #search .container {
+        width: 625px;
+    }
+}
+@media (min-width: 992px){
+    .container {
+        width: 970px;
+    }
+}
+@media (min-width: 1200px){
+    .container {
+        width: 85%;
+    }
+}
+img {
+    -ms-interpolation-mode: bicubic;
+    border: 0;
+    height: auto;
+    vertical-align: middle;
+}
+
+.movie-items .movie-item .title-in h6 a {
+    font-family: 'Dosis', sans-serif;
+    font-size: 14px;
+    color: #fff4e4;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.movie-items .movie-item .title-in h7 a {
+    color: #fff4e4;
+}
+
+.movie-items .movie-item:hover .title-in, .movie-items .movie-item:hover img {
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+    -moz-opacity: 1;
+    -khtml-opacity: 1;
+   -webkit-opacity: 1;
+   opacity: 1;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=100);
+    filter: alpha(opacity=100);
+}
+.esp-card {
+    background-color: #9e0a0f !important;
+    height: 315px !important;
+    border: 3px solid #9e0a0f;
+    border-radius: 8px;
+    width: fit-content;
+}
+.movie-items .movie-item img {
+    width: 183.8333px !important;
+    height: 250px !important;
+}
+
+    .card p:last-child {
+      color: #fff4e4;
+    }
+
+    /* On mouse-over, add a deeper shadow */
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(220, 248, 54, 0.78);
+      color: rgb(220, 248, 54);
+    }
+
+    .card .card-content {
+      padding: 16px 32px;
+    }
+    .cate{
+        position: absolute;
+        bottom: 40px;
+        width: 150%;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 4px;
+    }
+
+    /* Create four equal columns that sits next to each other */
+    .column {
+      flex: 25%;
+      max-width: 25%;
+      padding: 0 20px;
+    }
+
+    .column img {
+      vertical-align: middle;
+      width: 100%;
+    }
+
+    /* Responsive layout - makes a two column-layout instead of four columns */
+    @media screen and (max-width: 800px) {
+      .column {
+        flex: 50%;
+        max-width: 50%;
+      }
+    }
+
+    /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 600px) {
+      .column {
+        flex: 100%;
+        max-width: 100%;
+      }
+    }
+
+    .movie-item {
+      margin-bottom: 20px;
+    }
+
+    .movie-items .movie-item img {
+      -webkit-transition: all 0.5s ease-out;
+      -moz-transition: all 0.5s ease-out;
+      -o-transition: all 0.5s ease-out;
+      transition: all 0.5s ease-out;
+      height: 320px;
+      width: 100%;
+    }
+
+    .pagination li {
+      margin-right: 11px;
+      margin-bottom: 15px;
+    }
+
+    .movie-items .movie-item .title-in {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 30px;
+      margin-bottom: 20px;
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      margin-right: 20px;
+      width: max-content;
+    }
+
+    #search .top-search select {
+      width: 100%;
+      border-right: 1px solid #eb5e62 !important;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background: url({% static 'cinema/images/uploads/drop-icon.png' %}) no-repeat right 20px center;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+
+#search .top-search select, #search .top-search input {
+    height: 46px;
+    border: none;
+    background-color: #d8baba !important;
+    font-family: 'Nunito', sans-serif;
+    color: black;
+    font-weight: 500;
+    font-size: 18px;
+    text-transform: none;
+    width: -webkit-fill-available !important;
+}
+
+    #search .top-search input {
+      background: url({% static 'cinema/images/uploads/topsearch.png' %}) no-repeat right 20px center;
+      width: -webkit-fill-available;
+    }
+
+    #search .top-search {
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: inherit;
+      align-items: center;
+      justify-content: flex-start;
+      border: 4px solid #eb5e62 !important;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+    }
+
+    @media (max-width: 767px) {
+      .top-search {
+        display: flex !important;
+      }
+    }
+    .tab {
+        box-sizing: border-box;
+        padding: 15px 25px ;
+        background-color: #eac9ca !important;
+        border:  #eac9ca !important;
+        color: #fff;
+    }
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans 'Estrenos' %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans 'Estrenos' %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {% trans 'Home' %}
+{% endblock %}
+{% block breadcrumb_url %}
+  /
+{% endblock %}
+
+{% block page-single %}
+  <div class="movie-items">
+    <div class="container">
+      <div class="row">
+        <div class="row">
+          <div class="movie-tabs">
+            <div class="tabs">
+            <ul class="tab-links tabs-mv" style="justify-content: center;">
+              <li class="active"><a
+                      href="/estrenos/?q=&go=#overview">Videos</a></li>
+              <li><a href="?filter=colecciones&q=&go=#cast">Música</a></li>
+              <li><a href="?filter=atari&q=&go=#moviesrelated">Juegos</a></li>
+            </ul>
+            <div class="tab-content col-lg-12">
+              <div id="overview" class="tab active">
+                <form style="margin-bottom:20px" id="search-form" action="."
+                      method="get">
+                {% csrf_token %}
+                  <div id="search">
+                    <div class="container">
+                      <div class="top-search">
+                        <select name="filter" onchange="$('#search-form').submit();">
+                          <optgroup label="Videos">
+                            <option {% if request.GET.filter == 'películas' %}selected{% endif %}
+                                    value="películas">Películas
+                            </option>
+                            <option {% if request.GET.filter == 'series' %}selected{% endif %}
+                                    value="series">Series
+                            </option>
+                            <option {% if request.GET.filter == 'miniseries' %}selected{% endif %}
+                                    value="miniseries">Mini Series
+                            </option>
+                            <option {% if request.GET.filter == 'doramas' %}selected{% endif %}
+                                    value="doramas">Doramas
+                            </option>
+                            <option {% if request.GET.filter == 'novelas' %}selected{% endif %}
+                                    value="novelas">Novelas
+                            </option>
+                            <option {% if request.GET.filter == 'películas-animadas' %}selected{% endif %}
+                                    value="películas-animadas">Películas Animadas
+                            </option>
+                            <option {% if request.GET.filter == 'series-animadas' %}selected{% endif %}
+                                    value="series-animadas">Series Animadas
+                            </option>
+                            <option {% if request.GET.filter == 'películas-mangas' %}selected{% endif %}
+                                    value="películas-mangas">Películas Manga
+                            </option>
+                            <option {% if request.GET.filter == 'series-mangas' %}selected{% endif %}
+                                    value="series-mangas">Series Manga
+                            </option>
+                          </optgroup>
+                        </select>
+                      </div>
+                    </div>
+
+                  </div>
+                  <input name="go" value="#overview" hidden>
+                </form>
+              </div>
+              <div id="cast" class="tab">
+                <form style="margin-bottom:20px" id="search-form2" action="."
+                      method="get">
+                {% csrf_token %}
+                  <div id="search">
+                    <div class="container">
+                      <div class="top-search">
+                        <select name="filter" onchange="$('#search-form2').submit();">
+                          <optgroup label="Música">
+                            <option {% if request.GET.filter == 'colecciones' %}selected{% endif %}
+                                    value="colecciones">Colecciones
+                            </option>
+                            <option {% if request.GET.filter == 'discografía' %}selected{% endif %}
+                                    value="discografía">Discografía
+                            </option>
+                            <option {% if request.GET.filter == 'conciertos' %}selected{% endif %}
+                                    value="conciertos">Conciertos
+                            </option>
+                            <option {% if request.GET.filter == 'dvd' %}selected{% endif %}
+                                    value="dvd">DVD
+                            </option>
+                          </optgroup>
+                        </select>
+                      </div>
+                    </div>
+
+                  </div>
+                  <input name="go" value="#cast" hidden>
+                </form>
+              </div>
+              <div id="moviesrelated" class="tab">
+                <form style="margin-bottom:20px" id="search-form3" action="."
+                      method="get">
+                {% csrf_token %}
+                  <div id="search">
+                    <div class="container">
+                      <div class="top-search">
+                        <select name="filter" onchange="$('#search-form3').submit();">
+                          <optgroup label="Juegos">
+                            {% for category in categories %}
+                              <option {% if request.GET.filter == category.name.lower %}selected{% endif %}
+                                      value="{{ category.name.lower }}">{{ category.name }}</option>
+                            {% endfor %}
+                          </optgroup>
+
+                        </select>
+
+                      </div>
+                    </div>
+
+                  </div>
+                  <input name="go" value="#moviesrelated" hidden>
+                </form>
+              </div>
+            </div>
+          </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-10 col-lg-12 col-md-offset-1 col-lg-offset-0">
+            {% for movie in movies %}
+              <div class="col-xs-6 col-sm-5 col-md-4 col-lg-2-5 col-xs-offset-2
+               col-sm-offset-1 col-md-offset-0">
+              <div class="esp-card movie-item">
+                <div class="mv-img">
+                  {% if not movie.photo or movie.photo == '' %}
+                    <img src="{% static 'cinema/images/NoImagen.png' %}"
+                         alt="" height="284" width="185">
+                  {% else %}
+                    <img src="{{ movie.photo.url }}"
+                         alt="" height="284" width="185">
+                  {% endif %}
+                </div>
+                <div class="hvr-inner">
+                  {% if not request.GET.filter %}
+                    <a href="{% url 'site_movies_detail' movie.id %}"
+                       tabindex="0">
+                      Ver más
+                      <i class="ion-android-arrow-dropright"></i> </a>
+                  {% elif request.GET.filter|split:'-'|first == 'películas' %}
+                    <a href="{% url 'site_movies_detail' movie.id %}"
+                       tabindex="0">
+                      Ver más
+                      <i class="ion-android-arrow-dropright"></i> </a>
+                  {% elif request.GET.filter|split:'-'|first == 'series' or request.GET.filter|split:'-'|first == 'miniseries' or request.GET.filter|split:'-'|first == 'doramas' or request.GET.filter|split:'-'|first == 'novelas' %}
+                    <a href="{% url 'site_series_details_page' movie.id %}"
+                       tabindex="0">
+                      Ver más
+                      <i class="ion-android-arrow-dropright"></i> </a>
+                  {% elif request.GET.filter|split:'-'|first == 'dvd' %}
+                    <a href="{% url 'site_dvd_detail' movie.id %}?q=dvd"
+                       tabindex="0">
+                      Ver más
+                      <i class="ion-android-arrow-dropright"></i> </a>
+                  {% elif request.GET.filter|split:'-'|first == 'colecciones' %}
+                    <a href="{% url 'site_collection_detail' movie.id %}"
+                       tabindex="0">
+                      Ver más
+                      <i class="ion-android-arrow-dropright"></i> </a>
+                  {% elif request.GET.filter|split:'-'|first == 'conciertos' %}
+                    <a href="{% url 'site_concert_detail' movie.id %}"
+                       tabindex="0">
+                      Ver más
+                      <i class="ion-android-arrow-dropright"></i> </a>
+                  {% elif request.GET.filter|split:'-'|first == 'discografía' %}
+                    <a href="{% url 'site_author_detail' movie.id %}?q=discografía"
+                       tabindex="0">
+                      Ver más
+                      <i class="ion-android-arrow-dropright"></i> </a>
+                  {% else %}
+                    <a href="{% url 'site_games_details' movie.id %}"
+                       tabindex="0">
+                      Ver más
+                      <i class="ion-android-arrow-dropright"></i> </a>
+                  {% endif %}
+
+                </div>
+                <div class="title-in">
+                  <div class="cate">
+                    {% if movie.definition %}
+                      <span class="red"><a href="#" tabindex="0">
+                    {{ movie.definition }}</a></span>
+                    {% endif %}
+                  </div>
+                  <div class="name">
+                    {% if not request.GET.filter %}
+                      <h6><a href="#">
+                        {{ movie.title_eng|truncatechars:15 }}</a></h6>
+                      {% if movie.title %}
+                        <h7><a href="#" class="bg">{{ movie.title|truncatechars:15 }}</a></h7>
+                      {% endif %}
+                    {% elif request.GET.filter|split:'-'|first == 'películas' %}
+                      <h6><a href="#">{{ movie.title_eng|truncatechars:15 }}</a></h6>
+                      {% if movie.title %}
+                        <h7><a href="#" class="bg">{{ movie.title|truncatechars:15 }}</a></h7>
+                      {% endif %}
+                    {% elif request.GET.filter|split:'-'|first == 'series' or request.GET.filter|split:'-'|first == 'miniseries' or request.GET.filter|split:'-'|first == 'doramas' or request.GET.filter|split:'-'|first == 'novelas' %}
+                      <h6><a href="#">{{ movie.title_eng|truncatechars:15 }}</a></h6>
+                      {% if movie.title %}
+                        <h7><a href="#" class="bg">{{ movie.title|truncatechars:15 }}</a></h7>
+                      {% endif %}
+                    {% elif request.GET.filter|split:'-'|first == 'dvd' %}
+                      <h6><a href="#">{{ movie.title|truncatechars:15 }}</a></h6>
+                    {% elif request.GET.filter|split:'-'|first == 'colecciones' %}
+                      <h6><a href="#">{{ movie.name|truncatechars:15 }}</a></h6>
+                    {% elif request.GET.filter|split:'-'|first == 'conciertos' %}
+                      <h6><a href="#">{{ movie.interpreter|truncatechars:15 }}</a></h6>
+                    {% elif request.GET.filter|split:'-'|first == 'discografía' %}
+                      <h6><a href="#">{{ movie.name|truncatechars:15 }}</a></h6>
+                    {% else %}
+                      <h6><a href="#">{{ movie.name|truncatechars:15 }}</a></h6>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+             </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block custom-script %}
+  <script>
+    $.extend({
+      getUrlVars: function(){
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+
+        for(var i = 0; i < hashes.length; i++)
+        {
+          hash = hashes[i].split('=');
+          vars.push(hash[0]);
+          vars[hash[0]] = hash[1];
+        }
+
+        return vars;
+      },
+      getUrlVar: function(name){
+        return $.getUrlVars()[name];
+      }
+    });
+    $('li.dropdown').removeClass('active');
+
+    var go = decodeURIComponent($.getUrlVar('go'));
+    if  ( go ) {
+      //scroll to link or search results if url var 'hi' is present
+
+      $('li.active').removeClass('active');
+      $('div.active').removeClass('active');
+
+      $('a[href$="'+go+'"]').parent().addClass('active');
+      $(go).addClass("active");
+      $('li.dropdown').removeClass('active');
+    }
+    $('input[name="q"]').keypress(function (e) {
+       var input = document.activeElement;
+       var form = $(input).closest('form');
+      if (e.which == 13) {
+        $(form).submit();
+        return false;    //<---- Add this line
+      }
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+h7 {
+    position: absolute;
+    font-size: 16px;
+    text-shadow: 2px 2px yellow;
+    color: #ff0000;
+    animation: blinker 1s linear infinite;
+    top: 110px;
+}
+    @keyframes blinker {
+      50% {
+        opacity: 0;
+      }
+    }
+    .movie-single {
+      margin-top: 0;
+    }
+
+    .movie-single .movie-single-ct .mvcast-item .cast-it a {
+      color: #4280bf;
+      margin-right: 0;
+    }
+    .row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  @media screen and (max-width: 991px){
+    .col-sm-12 .movie-img.sticky-sb {
+      top: 0 !important;
+    }
+    .movie-item-style-2 {
+        flex-direction:column
+    }
+  }
+  .movie-item-style-2 {
+    justify-content: space-between;
+}
+#side-b {
+    position:relative;
+    top:160px;
+}
+.movie_single .movie-item-style-2 img {
+    height: auto !important;
+}
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans object.name %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans object.name %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {{ request.GET.q }}
+{% endblock %}
+{% block breadcrumb_url %}
+  /music/?q={{ request.GET.q }}&init=a
+{% endblock %}
+
+{% block page-single %}
+  <div class="page-single movie-single movie_single">
+    <div class="container">
+      <div class="row ipad-width2">
+        <div class="col-md-2-5 col-sm-12 col-xs-12">
+          <div class="movie-img sticky-sb" style="top: 0px; width: 207px;">
+          {% if not object.photo or object.photo == '' %}
+                <img src="{% static 'cinema/images/NoImagen.png' %}"
+                     alt="" height="435" style="width: 200px; height:200px">
+          {% else %}
+                <img src="{{ object.photo.url }}"
+                    alt="" height="435" style="width:200px; height:200px">
+          {% endif %}          </div>
+        </div>
+        <div class="col-md-6 col-sm-7 col-xs-12">
+          <div class="movie-single-ct main-content">
+            <h1 class="bd-hd">{{ object.name }}</h1>
+            <div class="movie-tabs">
+              <div class="tabs">
+                <ul class="tab-links tabs-mv">
+                {% if request.GET.q == "discografía" %}
+                  <li class="active"><a href="#moviesrelated">Discografía</a>
+                  {% else %}
+                  <li class="active"><a href="#dvd">DVD</a>
+                  {% endif %}
+                  </li>
+                </ul>
+                <div class="tab-content col-lg-12">
+                  <div id="moviesrelated" class="tab active">
+                    <div class="row">
+                      <div class="topbar-filter">
+                        <p>Se encontraron <span>
+                          {% if not object.album_set %}0{% else %}
+                            {{ object.album_set.count }}{% endif %}
+                          albums</span> en total</p>
+                      </div>
+                      {% for movie in object.album_set.all %}
+                        <div class="movie-item-style-2">
+                            
+                            <div class="mv-item-infor col-md-6" style="display:flex; flex-direction:row; justify-content:space-between;">
+                                <h3 class="col-md-8">
+                                  <a href="{% url 'site_album_detail' movie.id %}"
+                                  >{{ movie.title }}
+                                    </a></h3>
+                                <h3 class="col-md-4"><a href="#">{% if movie.year is not None %}{{ movie.year }}{% else %}Sin definir{% endif %}</a></h3>
+                            </div>
+                        <div class="col-md-6">
+                        {% if not movie.photo or movie.photo == '' %}
+                            {% if not movie.photo_back or movie.photo_back == '' %}
+                            <img src="{% static 'cinema/images/NoImagen.png' %}"
+                                alt="" onclick="$('#img-b').attr('src','cinema/images/NoImagen.png')">
+                            {% else %}
+                            <img src="{% static 'cinema/images/NoImagen.png' %}"
+                                alt="" onclick="$('#img-b').attr('src','{{ movie.photo_back.url }}')">
+                            {% endif %}
+                        {% else %}
+                            {% if not movie.photo_back or movie.photo_back == '' %}
+                            <img src="{{ movie.photo.url }}"
+                                alt="" onclick="$('#img-b').attr('src','cinema/images/NoImagen.png')">
+                            {% else %}
+                            <img src="{{ movie.photo.url }}"
+                                alt="" onclick="$('#img-b').attr('src','{{ movie.photo_back.url }}')">
+                            {% endif %}
+                        {% endif %}
+                        </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <div id="dvd" class="tab">
+                    <div class="row">
+                      <div class="topbar-filter">
+                        <p>Se encontraron <span>
+                          {% if not object.dvd_set %}0{% else %}
+                            {{ object.dvd_set.count }}{% endif %}
+                          dvds</span> en total</p>
+                      </div>
+                      {% for movie in object.dvd_set.all %}
+                        <div class="movie-item-style-2">
+                          {% if not movie.photo or movie.photo == '' %}
+                            <img src="{% static 'cinema/images/NoImagen.png' %}"
+                                alt="">
+                        {% else %}
+                            <img src="{{ movie.photo.url }}"
+                                alt="">
+                        {% endif %}
+                          <div class="mv-item-infor" style="display:flex; flex-direction:row; justify-content:space-between;">
+                            <h3>
+                              <a href="{% url 'site_dvd_detail' movie.id %}"
+                              >{{ movie.title }}
+                                </a></h3>
+                            <h3><a href="#">{{ movie.year }}</a></h3>
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3-0 col-sm-5 col-xs-12">
+        <h7>Click en la foto del {% if request.GET.q == "discografía" %}Album{% else %}DVD{% endif %} para ver la cara B</h7>
+            <div id="side-b" class="movie-img" style="top: 160px !important;">
+            
+              {% if not object.photo or object.photo == '' %}
+                    <img id="img-b" src="{% static 'cinema/images/NoImagen.png' %}"
+                         alt="" height="435">
+              {% else %}
+                    <img id="img-b" src="{{ object.photo.url }}"
+                        alt="" height="435">
+              {% endif %}
+            </div>   
+        </div>
+    </div>
+      </div>
+  </div>
+{% endblock %}

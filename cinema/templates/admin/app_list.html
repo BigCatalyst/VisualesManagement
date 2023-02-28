@@ -1,0 +1,265 @@
+{% load i18n static %}
+{% block custom-style %}
+
+<style>
+.dropdown-submenu {
+  position: relative;
+}
+
+#content-main {
+  margin-bottom: 200px;
+}
+
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  -webkit-border-radius: 0 6px 6px 6px;
+  -moz-border-radius: 0 6px 6px;
+  border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #ccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+  border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+  float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  -webkit-border-radius: 6px 0 6px 6px;
+  -moz-border-radius: 6px 0 6px 6px;
+  border-radius: 6px 0 6px 6px;
+}
+.dropdown ul li {
+    list-style-type: none;
+}
+.dropdown ul li a{
+    text-decoration: none;
+}
+ul.dropdown-menu{
+    width: 100%;
+}
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.btn-lg {
+    padding: 5px 65px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+}
+.btn-red {
+   background-color: #dd003f;
+   color: #ffffff;
+}
+
+</style>
+{% endblock %}
+{% if app_list %}
+<div style="display:flex; justify-content: space-around;">
+    <div class="dropdown" style="width:17%;">
+       <img src="{% static 'cinema/images/admin-video.png' %}" alt="">
+       <button class="btn btn-red btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Videos <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+        <li class="dropdown-submenu">
+          <a tabindex="-1" href="{% url 'site_admin_video_list_page' %}">Listado</a>
+          <ul class="dropdown-menu">
+            <li style="list-style-type: none;">
+              <a href="/admin/movie/actor/">
+                Actores
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/movie/movie/">
+                Películas
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/movie/combo/">
+                Combo
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/serial/serial/">
+                Series
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/serial/novela/">
+                Novelas
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/movie/documental/">
+                Documentales
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/movie/humor/">
+                Shows Humorísticos
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li style="list-style-type: none;"><a href="/admin/movie/actor/add/">Nuevo Actor</a></li>
+        <li style="list-style-type: none;"><a href="/admin/movie/movie/add/">Nueva Película</a></li>
+        <li style="list-style-type: none;"><a href="/admin/movie/combo/add/">Nuevo Combo</a></li>
+        <li style="list-style-type: none;">
+          <a href="/admin/serial/serial/add/">
+            Nueva Serie/Novela
+          </a>
+        </li>
+        <li style="list-style-type: none;">
+          <a href="/admin/movie/documental/add/">
+            Nuevo Documental
+          </a>
+        </li>
+        <li style="list-style-type: none;">
+          <a href="/admin/movie/humor/add/">
+            Nuevo Show Humorístico
+          </a>
+        </li>
+     </ul>
+    </div>
+    <div class="dropdown" style="width:17%;">
+       <img src="{% static 'cinema/images/admin-musica.png' %}" alt="">
+       <button class="btn btn-red btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Audios <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+        <li style="list-style-type: none;"><a href="/admin/music/collection/add/">Nueva Colección</a></li>
+        <li style="list-style-type: none;"><a href="/admin/music/author/add/">Nueva Discografía</a></li>
+        <li style="list-style-type: none;"><a href="/admin/music/concert/add/">Nuevo Concierto</a></li>
+        <li style="list-style-type: none;"><a href="/admin/music/dvd/add/">Nuevo DVD</a></li>
+        <li class="dropdown-submenu">
+          <a tabindex="-1" href="{% url 'site_admin_audio_list_page' %}">Listado</a>
+          <ul class="dropdown-menu">
+            <li style="list-style-type: none;">
+              <a href="/admin/music/collection/">
+                Colecciones
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/music/author/">
+                Discografías
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/music/concert/">
+                Conciertos
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/music/dvd/">
+                DVDs
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="dropdown" style="width:17%;">
+       <img src="{% static 'cinema/images/admin-administracion.png' %}" alt="">
+       <button class="btn btn-red btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Admin <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+        <li style="list-style-type: none;"><a href="/admin/offer/offer/add/">Nueva Oferta</a></li>
+        <li style="list-style-type: none;"><a href="/admin/game/game/add/">Nuevo Juego</a></li>
+        <li style="list-style-type: none;"><a href="/admin/movie/sport/add/">Nuevo Deporte</a></li>
+        <li class="dropdown-submenu">
+          <a tabindex="-1" href="#">Nomencladores</a>
+          <ul class="dropdown-menu">
+            <li style="list-style-type: none;">
+              <a href="/admin/movie/gender/">
+                Géneros
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/movie/format/">
+                Formatos
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/game/category/">
+                Categorías de juegos
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/tasks/contact/1/change/">
+                Contacto
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="dropdown-submenu">
+          <a tabindex="-1" href="#">Listado</a>
+          <ul class="dropdown-menu">
+            <li style="list-style-type: none;">
+              <a href="/admin/offer/offer/">
+                Ofertas
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/game/game/">
+                Juegos
+              </a>
+            </li>
+            <li style="list-style-type: none;">
+              <a href="/admin/movie/sport/">
+                Deportes
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li style="list-style-type: none;"><a href="/admin/users/user/1/password/">Cambiar contraseña</a></li>
+        <li style="list-style-type: none;"><a href="/load-data/">Cargar Datos</a></li>
+      </ul>
+    </div>
+</div>  
+{% else %}
+  <p>{% translate 'You don’t have permission to view or edit anything.' %}</p>
+{% endif %}

@@ -1,0 +1,291 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+    .card {
+      /* Add shadows to create the "card" effect */
+      box-shadow: 0 4px 8px 0 rgba(158, 10, 15, 0.78);
+      transition: 0.3s;
+      background-color: #9e0a0f;
+      color: #ffffff;
+      margin-bottom: 35px;
+    }
+
+    .card p:last-child {
+      color: #ffffff;
+    }
+
+    /* On mouse-over, add a deeper shadow */
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(220, 248, 54, 0.78);
+      color: rgb(220, 248, 54);
+    }
+
+    .card .card-content {
+      padding: 16px 32px;
+    }
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans "Games" %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans "Games" %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {% trans "Home" %}
+{% endblock %}
+{% block breadcrumb_url %}
+  /
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+  {% for row in categories %}
+    <div class="row">
+    {% for cat in row %}
+      <div class="col-xs-6 col-sm-6 col-md-3 col-xs-offset-1 col-md-offset-0">
+      {% if cat.id == 20 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/android.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/android_0.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/android_0.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% elif cat.id == 1 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/pc-game.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/pc-game_0.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/pc-game_0.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% elif cat.id == 3 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/mini-game.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/mini-game_0.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/mini-game_0.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% elif cat.id == 4 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/Xbox360.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/Xbox3602.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/Xbox3602.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% elif cat.id == 5 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/Nintendo64.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/Nintendo642.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/Nintendo642.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% elif cat.id == 6 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/NintendoDS.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/NintendoDS2.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/NintendoDS2.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% elif cat.id == 7 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/GameBoyAdvance.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/GameBoyAdvance2.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/GameBoyAdvance2.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% elif cat.id == 8 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/PSP.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/PSP2.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/PSP2.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% elif cat.id == 9 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/PS3.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/PS32.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/PS32.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% elif cat.id == 10 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/PlayStation1.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/PlayStation12.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/PlayStation12.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% elif cat.id == 11 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/PlayStation2.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/PlayStation22.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/PlayStation22.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% elif cat.id == 12 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/Nintendo.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/Nintendo2.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/Nintendo2.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% elif cat.id == 13 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/SEGA.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/SEGA2.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/SEGA2.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% elif cat.id == 14 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/GameBoyColor.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/GameBoyColor2.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/GameBoyColor2.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% elif cat.id == 16 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/XboxOne.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/XboxOne2.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/XboxOne2.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% elif cat.id == 17 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/PS4.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/PS42.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/PS42.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% elif cat.id == 18 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/gameboy.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/gameboy_0.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/gameboy_0.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% elif cat.id == 19 %}
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/atari.jpg' %}'"
+           onmouseout="this.getElementsByTagName('img')[0].src='{% static 'cinema/images/tarjetas/atari_0.jpg' %}'"
+        >
+          <div class="card">
+            <img src="{% static 'cinema/images/tarjetas/atari_0.jpg' %}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -1,0 +1,288 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags series_filter actor_filter %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+  #synopsis a {
+    color: black;
+}
+#synopsis a:hover {
+    color: #dcf836;
+}
+    .movie-single {
+      margin-top: 0;
+    }
+
+    .movie-single .movie-single-ct .mvcast-item .cast-it a {
+      color: #4280bf;
+      margin-right: 0;
+    }
+
+    .movie-single .movie-single-ct .mvcast-item .cast-it .cast-left {
+      width: 55%;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    @media screen and (max-width: 991px) {
+      .movie-img.sticky-sb {
+        top: 0 !important;
+      }
+    }
+
+    #overview .run-time span {
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+        .cate-transmission .red {
+        background-color: #bb1616;
+    }
+    .cate-transmission span {
+        padding: 3px 5px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+    }
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans object.title_eng %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans object.title_eng %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {% if object.type.lower == 'novela' %}
+    {% trans 'Novelas' %}
+  {% else %}
+    {% if object.type.lower == 'animado' %}
+      {% trans 'Series Animadas' %}
+    {% endif %}
+    {% if object.type.lower == 'manga' %}
+      {% trans 'Series Manga' %}
+    {% endif %}
+    {% if object.type.lower == 'serie' %}
+      {% trans 'Series' %}
+    {% endif %}
+    {% if object.type.lower == 'miniserie' %}
+      {% trans 'Miniseries' %}
+    {% endif %}
+  {% endif %}
+{% endblock %}
+{% block breadcrumb_url %}
+  {% if object.type.lower == 'novela' %}
+    /series/?q=novela&init=no
+  {% else %}
+    {% if object.type.lower == 'animado' %}
+      /series/?q=animado&init=no
+    {% endif %}
+    {% if object.type.lower == 'manga' %}
+      /series/?q=manga&init=no
+    {% endif %}
+    {% if object.type.lower == 'serie' %}
+      /series/?q=serie&init=no
+    {% endif %}
+    {% if object.type.lower == 'miniserie' %}
+      /series/?q=miniserie&init=no
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
+{% block page-single %}
+  <div class="page-single movie-single movie_single">
+    <div class="container">
+      <div class="row ipad-width2">
+        <div class="col-md-4 col-sm-12 col-xs-12">
+          <div class="movie-img sticky-sb gradient_overlay" style="top: 0px;">
+             {% if not object.photo or object.photo == '' %}
+                <img src="{% static 'cinema/images/NoImagen.png' %}"
+                     alt="" height="435">
+          {% else %}
+                <img src="{{ object.photo.url }}"
+                    alt="" height="435">
+          {% endif %}
+          {% if object.in_transmission == True %}
+                        <div class="title-in" style="top:0; opacity: 0.8;">
+                            <div class="cate-transmission">
+                                <span class="red" style="color:#fff;">
+                            En transmisión</span>
+                            </div>
+                        </div>
+                    {% endif %}
+          {% if object|definition %}
+          <div class="title-in">
+                    <div class="cate">
+                        <span class="red"><a href="#" tabindex="0">
+                    {{ object|definition }}</a></span>
+                      
+                    </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-8 col-sm-12 col-xs-12">
+          <div class="movie-single-ct main-content">
+            <div class="movie-tabs">
+              <div class="tabs">
+                <ul class="tab-links tabs-mv">
+                  <li class="active"><a href="#overview">Detalles</a></li>
+                  <li><a href="#cast"> Actores </a></li>
+                  <li><a href="#moviesrelated"> Temporadas</a></li>
+                </ul>
+                <div class="tab-content col-lg-12">
+                  <div id="overview" class="tab active">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div style="border-bottom: 1px solid #233a50;">
+                            <h3>Título en Inglés:
+                                  <a href="#" style="padding-left: 24px">{{ object.title_eng }}</a></h3>
+                            <h3>Título en Español:
+                                  {% if object.title %} <a href="#">{{ object.title }}</a>{% endif %}</h3>
+                        </div>
+                        <br/>
+                        <h3>Sinopsis:</h3>
+                        {% if object.synopsis %}
+                          {% if object.synopsis|wordcount > 50 %}
+                            <p id="synopsis" class="synopsis_short"
+                               style="border-bottom: 1px solid #233a50;padding: 20px 20px 20px 0;"
+                            >
+                              {{ object.synopsis|truncatewords:50 }}
+                              <a style="cursor: pointer; justify-content:center;"
+                                 onclick="$('.synopsis_short').hide(); $('.synopsis_complete').show();"
+                              >
+                                Leer más...
+                              </a>
+                            </p>
+                           <p id="synopsis" class="synopsis_complete" style="display:none">
+                               {{ object.synopsis }}
+                           </p>
+
+                          {% else %}
+                            <p style="border-bottom: 1px solid #233a50;padding: 20px 20px 20px 0;">
+                              {{ object.synopsis }}</p>
+                          {% endif %}
+                        {% else %}
+                          <p style="border-bottom: 1px solid #233a50;padding: 20px 20px 20px 0;">
+                            En estos momentos no tenemos la sinopsis de
+                            esta serie. Disculpe las molestias que
+                            esto pueda ocacionar. Gracias.
+                          </p>
+                        {% endif %}
+                        <div style="display: flex; justify-content:flex-start;">
+                            <div class="sb-it">
+                              <h3 style="padding-right: 10px">Géneros:
+                              <a href="{% url 'site_series_page' %}?q=gender-{{ object.gender }}&init=no">
+                                {{ object.gender.name }}</a>
+                              </h3>
+                            </div>
+                            <div class="sb-it" style="margin-left:25%">
+                              <h3 style="padding-right: 10px;">País: 
+                              <a href="#" style="padding-right: 10px">{{ object.origen }}</a></h3>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-xs-12 col-sm-12" >
+                        <div class="sb-it">
+                          <h3 style="padding-right: 10px">Actores: </h3>
+                          <h3 style="padding-right: 10px">
+                            {% if object.actor.all %}
+                              {% for actor in serial.actor.all %}
+                                <a href="{% url 'site_actors_series_detail' actor.id %}">
+                                  {{ actor.name }}{% if not forloop.last %},{% endif %}</a>
+                              {% endfor %}
+                            {% else %}
+                              <a href="#" >Sin definir</a>
+                            {% endif %}
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="cast" class="tab">
+                    <div class="row">
+                      <div class="title-hd-sm">
+                        <h4>Protagonistas</h4>
+                      </div>
+                      <div class="mvcast-item">
+                        {% if object.actor.all %}
+                          {% for actor in object.actor.all %}
+                            <div class="cast-it">
+                              <div class="cast-left">
+                                {% if actor.photo %}
+                                  <img src="{{ actor.photo.url }}"
+                                       alt="" style="width: 80px;height: 80px;">
+                                {% else %}
+                                  <h4>
+                                    {{ actor.name|make_list|slice:':1'|join:'' }}{{ actor.name|last_word|make_list|slice:':1'|join:'' }}</h4>
+                                {% endif %}
+                                <a href="{% url 'site_actors_series_detail' actor.id %}"
+                                >{{ actor.name }}</a>
+                              </div>
+                              <p>
+                                {% for movie in actor.serial_set.all %}
+                                  <a href="{% url 'site_series_details_page' movie.id %}"
+                                  >{{ movie.title_eng }}
+                                          {% if not forloop.last %}, {% endif %}
+                                  </a>
+                                {% endfor %}
+                              </p>
+                            </div>
+                          {% endfor %}
+                        {% else %}
+                          <p>En estos momentos no tenemos definidos los actores
+                            de esta serie. Disculpe las molestias que
+                            esto pueda ocacionar. Gracias.</p>
+                        {% endif %}
+                      </div>
+                      <!-- //== -->
+                    </div>
+                  </div>
+                  <div id="moviesrelated" class="tab">
+                    <div class="row">
+                      <div class="topbar-filter">
+                        <p>Se encontraron <span>
+                          {% if not object.season_set %}0{% else %}
+                            {{ object.season_set.count }}{% endif %}
+                          temporadas</span> en total</p>
+                      </div>
+                      {% for movie in object.season_set.all %}
+                        <div class="movie-item-style-2">
+                          <div class="mv-item-infor" >
+                            <h6>
+                              <a href="#"
+                              >Temporada {{ movie.number }}
+                              </a></h6>
+                            <div style="display:flex; justify-content:space-between; margin-left:auto">
+                            <h3 style="margin-right:20px">
+                              Capítulos: <a href="#">{% if movie.chapters %}{{ movie.chapters }}{% else %}Sin definir {% endif %}</a></h3>
+                              <h3 style="margin-right:10px"> Definición:
+                                  <a href="#">{% if movie.definition and movie.definition != "No" and movie.definition != "NO" %}{{ movie.definition }}{% endif %}</a></h3>
+                              <h3 style="margin-right:20px">Año:
+                                <a href="#">{{ movie.year }}</a>
+                            </h3>
+                            <h3 style="margin-right:20px">
+                              Idioma:
+                              <a href="#">{{ movie.language }}</a></h3>
+                             <h3>Formato: <a href="#">
+                            {{ movie.format.format }}</a> </h3>
+                            </div>    
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

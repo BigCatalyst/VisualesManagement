@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+    .card {
+      /* Add shadows to create the "card" effect */
+      box-shadow: 0 4px 8px 0 rgba(158, 10, 15, 0.78);
+      transition: 0.3s;
+      background-color: #9e0a0f;
+      color: #ffffff;
+      margin-bottom: 35px;
+    }
+
+    .card p:last-child {
+      color: #ffffff;
+    }
+
+    /* On mouse-over, add a deeper shadow */
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(220, 248, 54, 0.78);
+      color: rgb(220, 248, 54);
+    }
+
+    .card .card-content {
+      padding: 16px 32px;
+    }
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans "Games" %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans "Games" %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {% trans "Home" %}
+{% endblock %}
+{% block breadcrumb_url %}
+  /
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+  {% for row in categories %}
+    <div class="row">
+    {% for cat in row %}
+      <div class="col-xs-6 col-sm-6 col-md-3 col-xs-offset-1 col-md-offset-0">
+      
+        <a href="{% url 'site_games_page' %}?q={{ cat.name.lower }}&init=no"
+           onmouseover="this.getElementsByTagName('img')[0].src='{{ cat.photo_back.url }}' "
+           onmouseout="this.getElementsByTagName('img')[0].src='{{ cat.photo.url }}' "
+        >
+          <div class="card">
+            <img src="{{ cat.photo.url }}"
+                 alt="category search">
+            <div class="card-content">
+              <h4><b>{{ cat.name }}</b></h4>
+            </div>
+          </div>
+        </a>
+      
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}

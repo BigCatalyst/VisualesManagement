@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+  <style>
+ .esp-card {
+    background-color: #9e0a0f !important;
+    height: 255px !important;
+    border: 3px solid #9e0a0f;
+    border-radius: 8px;
+    width: fit-content;
+}
+
+    .card p:last-child {
+      color: #ffffff;
+    }
+
+    /* On mouse-over, add a deeper shadow */
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(220, 248, 54, 0.78);
+      color: rgb(220, 248, 54);
+    }
+
+    .card .card-content {
+      padding: 16px 32px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 4px;
+    }
+
+    /* Create four equal columns that sits next to each other */
+    .column {
+      flex: 25%;
+      max-width: 25%;
+      padding: 0 20px;
+    }
+
+    .column img {
+      vertical-align: middle;
+      width: 100%;
+    }
+
+    /* Responsive layout - makes a two column-layout instead of four columns */
+    @media screen and (max-width: 800px) {
+      .column {
+        flex: 50%;
+        max-width: 50%;
+      }
+    }
+
+    /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 600px) {
+      .column {
+        flex: 100%;
+        max-width: 100%;
+      }
+    }
+
+    .movie-item {
+      margin-bottom: 20px;
+    }
+
+    .movie-items .movie-item img {
+      -webkit-transition: all 0.5s ease-out;
+      -moz-transition: all 0.5s ease-out;
+      -o-transition: all 0.5s ease-out;
+      transition: all 0.5s ease-out;
+      width: 192px !important;
+      height: 200px !important;
+
+    }
+    .pagination li {
+      margin-right: 13px;
+      margin-bottom: 15px;
+    }
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans "Actores" %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans "Actores" %}
+{% endblock %}
+{% block breadcrumb_path %}
+  {% trans "Movies" %}
+{% endblock %}
+{% block breadcrumb_url %}
+  /movies/
+{% endblock %}
+
+{% block page-single %}
+  <div class="movie-items">
+    <div class="container">
+      <div class="row ipad-width">
+        <div class="row">
+          <nav class="row">
+            <ul class="pagination" style="flex-wrap: wrap;">
+              <li class="page-item {% if request.GET.init == 'a' or not request.GET.init %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=a">A</a></li>
+              <li class="page-item {% if request.GET.init == 'b' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=b">B</a></li>
+              <li class="page-item {% if request.GET.init == 'c' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=c">C</a></li>
+              <li class="page-item {% if request.GET.init == 'd' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=d">D</a></li>
+              <li class="page-item {% if request.GET.init == 'e' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=e">E</a></li>
+              <li class="page-item {% if request.GET.init == 'f' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=f">F</a></li>
+              <li class="page-item {% if request.GET.init == 'g' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=g">G</a></li>
+              <li class="page-item {% if request.GET.init == 'h' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=h">H</a></li>
+              <li class="page-item {% if request.GET.init == 'i' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=i">I</a></li>
+              <li class="page-item {% if request.GET.init == 'j' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=j">J</a></li>
+              <li class="page-item {% if request.GET.init == 'k' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=k">K</a></li>
+              <li class="page-item {% if request.GET.init == 'l' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=l">L</a></li>
+              <li class="page-item {% if request.GET.init == 'm' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=m">M</a></li>
+              <li class="page-item {% if request.GET.init == 'n' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=n">N</a></li>
+              <li class="page-item {% if request.GET.init == 'o' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=o">O</a></li>
+              <li class="page-item {% if request.GET.init == 'p' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=p">P</a></li>
+              <li class="page-item {% if request.GET.init == 'q' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=q">Q</a></li>
+              <li class="page-item {% if request.GET.init == 'r' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=r">R</a></li>
+              <li class="page-item {% if request.GET.init == 's' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=s">S</a></li>
+              <li class="page-item {% if request.GET.init == 't' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=t">T</a></li>
+              <li class="page-item {% if request.GET.init == 'u' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=u">U</a></li>
+              <li class="page-item {% if request.GET.init == 'v' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=v">V</a></li>
+              <li class="page-item {% if request.GET.init == 'w' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=w">W</a></li>
+              <li class="page-item {% if request.GET.init == 'x' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=x">X</a></li>
+              <li class="page-item {% if request.GET.init == 'y' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=y">Y</a></li>
+              <li class="page-item {% if request.GET.init == 'z' %}active{% endif %}">
+                <a href="?q={{ request.GET.q }}&init=z">Z</a></li>
+            </ul>
+          </nav>
+          <div class="col-xs-12 col-sm-2 col-md-10 col-lg-12 col-md-offset-1 col-lg-offset-0">
+            {% for actor in actors %}
+              <div class="col-xs-6 col-sm-5 col-md-4 col-lg-2-5 col-xs-offset-2
+               col-sm-offset-1 col-md-offset-0">
+                <div class="esp-card movie-item">
+                  <div class="mv-img">
+                  {% if not actor.photo or actor.photo == '' %}
+                    <img src="{% static 'cinema/images/NoImagen.png' %}"
+                         alt="">
+                  {% else %}
+                        <img src="{{ actor.photo.url }}"
+                            alt="" height="284" width="185">
+                  {% endif %}
+                  </div>
+                  <div class="hvr-inner">
+                    <a href="{% url 'site_actors_detail' actor.id %}"
+                       tabindex="0">
+                      Ver más
+                      <i class="ion-android-arrow-dropright"></i> </a>
+                  </div>
+                  <div class="title-in">
+                    <h6><a href="#">{{ actor.name }}</a></h6>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters static i18n account crispy_forms_tags music_filter actor_filter %}
+{% block search %}
+{% endblock %}
+{% block custom_css %}
+   <script src="{% static 'cinema/js/js-image-zoom/js-image-zoom.js' %}"></script>
+  <style>
+    .movie-single {
+      margin-top: 0;
+    }
+
+    .movie-single .movie-single-ct .mvcast-item .cast-it a {
+      color: #4280bf;
+      margin-right: 0;
+    }
+
+    .movie-single .movie-single-ct .mvcast-item .cast-it .cast-left {
+      width: 55%;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    @media screen and (max-width: 991px) {
+      .movie-img.sticky-sb {
+        top: 0 !important;
+      }
+    }
+
+    #overview .run-time span {
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+    .img-transform {
+      display: block;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .img-zoom-result {
+      border: 1px solid #d4d4d4;
+      /*set the size of the result div:*/
+      width: 300px;
+      height: 300px;
+    }
+    h3 a {
+     color: #4f5b68;
+    }
+    .movie-item-style-2 {
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        overflow: hidden;
+        margin-bottom: 30px;
+        padding-bottom: 30px;
+        border-bottom: none;
+    }
+  </style>
+{% endblock %}
+
+{% block breadcrumb_title %}
+  {% trans object.name %}
+{% endblock %}
+{% block breadcrumb_name %}
+  {% trans object.name %}
+{% endblock %}
+{% block breadcrumb_path %}
+  Diversos
+{% endblock %}
+{% block breadcrumb_url %}
+  /offers/list/?q=2
+{% endblock %}
+
+{% block page-single %}
+  <div class="page-single movie-single movie_single">
+    <div class="container">
+      <div class="row ipad-width2">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="movie-single-ct main-content">
+            <h1 class="bd-hd">{{ object.name }}
+            </h1>
+            <div class="movie-tabs">
+              <div class="tabs">
+                <ul class="tab-links tabs-mv">
+                  <li class="active"><a href="#details"> Detalles</a></li>
+                </ul>
+                <div class="tab-content col-lg-12" style="margin-left:20px">
+                  <div id="details" class="tab active">
+                    <div class="row">
+                      <div class="movie-item-style-2">
+                        <div class="mv-item-infor">
+                           <div class="row">
+                              <div class="col-md-12 col-sm-12 col-xs-12">
+                                {% if object.description %}
+                                    
+                                      {{ object.description|safe }}
+                                  
+                                {% else %}
+                                  <p style="border-bottom: 1px solid #233a50;padding: 20px 20px 20px 0;">
+                                    En estos momentos no tenemos la descripción de
+                                    esta oferta. Disculpe las molestias que
+                                    esto pueda ocacionar. Gracias.
+                                  </p>
+                                {% endif %}
+                                {% if object.price %}
+                                    <div class="sb-it">
+                                        <h3>Precio: <span>{{ object.price }}</span></h3>
+                                    </div>
+                                {% endif %}
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="movie-img gradient_overlay" style="margin-left:20px; border: 3px solid #9e0a0fd6; border-radius:8px">
+                {% if not object.photo or object.photo == '' %}
+                    <img src="{% static 'cinema/images/NoImagen.png' %}"
+                         alt="" height="435" ">
+              {% else %}
+                    <img src="{{ object.photo.url }}"
+                        alt="" height="435">
+              {% endif %}
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block custom-script %}
+  <script>
+  function showText(){
+    $("#synopsis").text("{{ object.description|safe }}");
+  }
+  </script>
+{% endblock %}
