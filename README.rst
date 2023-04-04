@@ -4,6 +4,6 @@ El sitio web cuenta con potentes buscadores que permiten encontrar fácilmente e
 
 El sistema permite a los clientes explorar fácilmente el catálogo completo del negocio, ver las especificaciones de cada uno de los contenidos multimedia y revisar su disponibilidad. De esta manera, el sistema facilita la administración y venta de contenido multimedia, así como el proceso de selección y compra para los clientes.
 
-ProyectoPaqueteroDjango es una herramienta útil para administradores y propietarios de negocios que desean mejorar la gestión y promoción de su contenido multimedia, al mismo tiempo que ofrecen a sus clientes una experiencia de navegación cómoda y fácil.
+VisualesManagement es una herramienta útil para administradores y propietarios de negocios que desean mejorar la gestión y promoción de su contenido multimedia, al mismo tiempo que ofrecen a sus clientes una experiencia de navegación cómoda y fácil.
 
 
